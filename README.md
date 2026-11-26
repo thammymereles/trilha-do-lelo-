@@ -6,7 +6,7 @@ Funciona no navegador do celular, do tablet ou do computador. Não precisa insta
 
 ## O que tem no app
 
-A trilha tem 6 etapas e 170 brincadeiras:
+A trilha tem 6 etapas e 174 brincadeiras:
 
 | Etapa | O que a criança faz |
 |---|---|
@@ -15,9 +15,9 @@ A trilha tem 6 etapas e 170 brincadeiras:
 | O Som das Letras | Ouve uma palavra e escolhe a letra do primeiro som |
 | Juntando os Sons | Ouve e toca na sílaba certa, monta palavras com sílabas |
 | Começando a Ler | Acha a palavra certa, lê a palavra e acha a figura, lê frases curtas |
-| Pensar e Mexer | Lógica: o que vem depois na fila, qual figura é diferente, do menor ao maior, jogo da memória. Coordenação motora: passar o dedo em caminhos (reta, onda, zigue-zague), arrastar figuras até a sombra, estourar bolhas |
+| Pensar e Mexer | Lógica: o que vem depois na fila, qual figura é diferente, do menor ao maior, jogo da memória. Coordenação motora: passar o dedo em caminhos (reta, onda, zigue-zague), arrastar figuras até a sombra, estourar bolhas. Mexa o corpo: pausas longe da tela (pular, equilibrar, fazer letras com o corpo, bater palmas nas sílabas). Carros e trens: dirigir o carro até a garagem certa, corrida pegando estrelas e letras, trem das sílabas |
 
-Os jogos de Pensar e Mexer entram na trilha recomendada um a cada 3 letras, para variar o ritmo.
+Os jogos de Pensar e Mexer entram na trilha recomendada um a cada 2 letras, para variar o ritmo.
 
 Feito para quem ainda não lê:
 
@@ -87,5 +87,6 @@ Está tudo num arquivo só, o `index.html`. O conteúdo fica no começo do `<scr
 - `LER`: as palavras e frases da etapa "Começando a Ler".
 - `ORDER`: a ordem em que a trilha recomenda as letras.
 - `CATS`, `SEQ_POOL`, `SHADOW_POOL` e `PATHS`: as figuras dos jogos de Pensar e Mexer (grupos do "qual é diferente", figuras das filas e das sombras, e os caminhos).
+- `GARAGE_PICS`, `BODY` e `BODY_LETTERS`: os bichos das garagens e os movimentos do "Mexa o corpo".
 
 Para trocar uma figura, troque o emoji: o app mostra a versão 3D dele sozinho. Para trocar uma palavra, troque o texto. O resto do app se ajusta sozinho.

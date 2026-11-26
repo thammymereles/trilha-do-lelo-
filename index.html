@@ -18,8 +18,8 @@
   --sky:#DFF3EE; --sky-2:#C6E8DF; --paper:#FFFFFF; --ink:#1F3640; --ink-soft:#4E6A73; --line:#BBDDD3;
   --go:#138A7E; --go-deep:#0B5F56; --sun:#FFC93C; --sun-deep:#C98F00; --tang:#FF8A3D;
   --coral:#E4574C; --coral-soft:#FDE4E1; --ok:#1E9E5A; --ok-soft:#D6F4E4;
-  --c-letras:#FF8A3D; --c-tracar:#FFC93C; --c-sons:#2F8FD8; --c-silabas:#E5487A; --c-ler:#2E9E6A; --c-pensar:#8B5CF6;
-  --t-letras:#D9601A; --t-tracar:#A97400; --t-sons:#1C6BAE; --t-silabas:#C22F62; --t-ler:#1F7A50; --t-pensar:#6A3BD1;
+  --c-letras:#FF8A3D; --c-tracar:#FFC93C; --c-sons:#2F8FD8; --c-silabas:#E5487A; --c-ler:#2E9E6A; --c-pensar:#8B5CF6; --c-cuidar:#12A8B8; --c-quebra:#5B6CF0; --c-cantar:#D946A8;
+  --t-letras:#D9601A; --t-tracar:#A97400; --t-sons:#1C6BAE; --t-silabas:#C22F62; --t-ler:#1F7A50; --t-pensar:#6A3BD1; --t-cuidar:#0A7883; --t-quebra:#3A48C8; --t-cantar:#A61E7C;
   --f-kid:'Andika','Comic Sans MS','Trebuchet MS',sans-serif;
   --f-ui:'Fredoka','Andika','Trebuchet MS',system-ui,sans-serif;
   --f-emo:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
@@ -372,9 +372,197 @@ input[type=range]{width:100%;accent-color:var(--go)}
 .bdone .cta{min-width:220px;animation:pulse 1.4s ease-in-out infinite}
 .bdone .cta[hidden]{display:none}
 
+/* Cuidar de Mim */
+.cwrap{margin-top:auto;display:flex;justify-content:center}
+.scene{position:relative;border-radius:28px;background:linear-gradient(#EAF8FB,#CDEEF5);box-shadow:inset 0 0 0 3px #A9DDE8;touch-action:none;user-select:none;-webkit-user-select:none;overflow:hidden;transition:box-shadow .3s}
+.scene.shine{box-shadow:inset 0 0 0 3px #A9DDE8,0 0 0 6px var(--sun),0 0 28px var(--sun)}
+.hfig{position:absolute;left:7%;top:7%;width:86%;height:86%;display:grid;place-items:center;line-height:1;pointer-events:none}
+.hfig .e3d{width:100%;height:100%;vertical-align:0}
+.spot{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;line-height:1;pointer-events:none}
+.spot.mud{background:radial-gradient(circle at 38% 36%,#8A5A2E 0 22%,#5C3A1A 55%,rgba(92,58,26,0) 72%);border-radius:46% 54% 50% 50%/55% 45% 55% 45%}
+.spot.foam{background:radial-gradient(circle at 30% 35%,#fff 0 24%,transparent 25%),radial-gradient(circle at 66% 38%,#fff 0 27%,transparent 28%),radial-gradient(circle at 48% 68%,#fff 0 26%,transparent 27%),radial-gradient(circle at 24% 70%,#F4FCFF 0 14%,transparent 15%),radial-gradient(circle at 77% 72%,#F4FCFF 0 13%,transparent 14%);filter:drop-shadow(0 1px 1px rgba(70,130,160,.45))}
+.spot.gone{display:none}
+.spot.pop{animation:spop .3s ease-out}
+@keyframes spop{from{transform:translate(-50%,-50%) scale(.3)}}
+.tool{position:absolute;z-index:3;line-height:1;pointer-events:none;transform:translate(-30%,-70%) rotate(-14deg);animation:wob .22s ease-in-out infinite alternate}
+.tool[hidden]{display:none}
+@keyframes wob{to{transform:translate(-30%,-70%) rotate(12deg)}}
+.dock{display:flex;justify-content:center;padding-top:8px}
+.dtool{width:84px;height:84px;border-radius:24px;background:var(--paper);box-shadow:0 6px 0 var(--line);display:grid;place-items:center;animation:pulse 1.6s ease-in-out infinite}
+.dtool .emo{font-size:52px}
+.stline{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.stslot{width:clamp(52px,15vw,76px);aspect-ratio:1;border-radius:16px;border:3px dashed var(--line);display:grid;place-items:center}
+.stslot i{font-style:normal;font-family:var(--f-kid);font-weight:700;font-size:22px;color:var(--ink-soft)}
+.stslot.full{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.stslot .emo{font-size:clamp(32px,10vw,50px)}
+/* Quebra-cabeças */
+.pz{position:relative;margin-top:auto;width:100%}
+.pzb{position:absolute;top:0;border-radius:18px;background:var(--paper);box-shadow:0 6px 0 var(--line);overflow:hidden;transition:box-shadow .3s}
+.pzb.done{box-shadow:0 6px 0 var(--line),0 0 0 5px var(--ok)}
+.pzg{opacity:.16;pointer-events:none}
+.pzb.done .pzg{opacity:0}
+.pzc{position:absolute;box-shadow:inset 0 0 0 1px rgba(31,54,64,.13);cursor:pointer}
+.pzc.hint{background:rgba(255,201,60,.4);box-shadow:inset 0 0 0 4px var(--sun)}
+.pzc.wrong{background:var(--coral-soft)}
+.pzp{position:absolute;left:0;top:0;overflow:hidden;border-radius:8px;background:#FFFDF6;box-shadow:0 3px 0 rgba(31,54,64,.2),inset 0 0 0 2px #fff;transform-origin:0 0;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;transition:left .25s,top .25s,transform .25s;z-index:2}
+.pzp.drag{transition:none;z-index:30;box-shadow:0 14px 24px rgba(0,0,0,.22);cursor:grabbing}
+.pzp.sel{outline:4px solid var(--sun);outline-offset:1px;z-index:3}
+.pzp.placed{border-radius:0;box-shadow:none;cursor:default;z-index:1;pointer-events:none;background:transparent}
+.pzi{position:absolute;display:grid;place-items:center;pointer-events:none;background:radial-gradient(circle at 18% 20%,#FFE59A 0 16%,transparent 17%),radial-gradient(circle at 82% 78%,#C9F0D6 0 18%,transparent 19%),linear-gradient(135deg,#FFE9B0,#FFD0DC 50%,#C8E6FF)}
+.pzl{font-family:var(--f-kid);font-weight:700;line-height:.8;padding-top:.06em;color:var(--t-quebra);-webkit-text-stroke:.02em #fff;paint-order:stroke}
+.pzf{display:grid;place-items:center;line-height:1}
+.pzf .e3d{width:100%;height:100%;vertical-align:0}
+
+/* Mexa o corpo: animações */
+.mstage{position:relative;flex:1;min-height:250px;max-height:420px;border-radius:28px;overflow:hidden;background:linear-gradient(#D7F0FF,#F2FAFF 72%);box-shadow:inset 0 0 0 3px #BFE3F5}
+.mground{position:absolute;left:0;right:0;bottom:0;height:20%;background:linear-gradient(#9BD77E,#79C15C)}
+.cl{position:absolute;width:84px;height:28px;border-radius:28px;background:#fff;opacity:.95}
+.cl::before{content:'';position:absolute;left:16px;top:-16px;width:42px;height:38px;border-radius:50%;background:#fff}
+.c1{top:13%;left:8%}.c2{top:29%;left:64%;transform:scale(.7)}
+.m-fly.run .cl{animation:cloud 6s linear -2.5s infinite}.m-fly.run .c2{animation-duration:9s;animation-delay:-6s}
+@keyframes cloud{from{left:105%}to{left:-35%}}
+.mbox{position:absolute;left:50%;bottom:15%;transform:translateX(-50%);display:grid;place-items:center;z-index:1}
+.mfig{display:block;font-size:clamp(84px,27vw,134px);line-height:1;transform-origin:50% 100%}
+.mshadow{position:absolute;left:50%;bottom:13%;width:110px;height:18px;margin-left:-55px;border-radius:50%;background:rgba(40,90,40,.25)}
+.mpuff{position:absolute;bottom:14%;width:26px;height:26px;border-radius:50%;background:#fff;opacity:0}
+.p1{left:calc(50% - 76px)}.p2{left:calc(50% + 50px)}
+.mfig.beat{animation:mjump .75s cubic-bezier(.3,.7,.4,1)}
+@keyframes mjump{0%{transform:scale(1.15,.85)}35%{transform:translateY(-70%) scale(.92,1.1)}60%{transform:translateY(-70%)}90%{transform:scale(1.12,.88)}100%{transform:none}}
+.m-hop .mfig.beat{animation-name:mhop}
+@keyframes mhop{0%{transform:scale(1.1,.9)}40%{transform:translateY(-58%) rotate(-12deg)}75%{transform:translateY(-12%) rotate(6deg)}100%{transform:none}}
+.m-stomp .mfig.beat{animation:mstomp .6s ease-in}
+@keyframes mstomp{0%{transform:none}45%{transform:translateY(-14%) rotate(-7deg)}70%{transform:scale(1.07,.93)}100%{transform:none}}
+.mshadow.beat{animation:mshadow .75s}
+@keyframes mshadow{35%,60%{transform:scale(.55);opacity:.5}}
+.mpuff.beat{animation:mpuff .5s .5s ease-out}
+.m-stomp .mpuff.beat{animation-delay:.3s}
+@keyframes mpuff{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:translateY(-14px) scale(1.7)}}
+.mstage.shake{animation:shake .4s .3s}
+.m-walk.run .mfig{animation:mwalk 10s linear infinite}
+@keyframes mwalk{0%{transform:translateX(-75%) scaleX(-1)}48%{transform:translateX(75%) scaleX(-1)}50%{transform:translateX(75%)}98%{transform:translateX(-75%)}100%{transform:translateX(-75%) scaleX(-1)}}
+.m-side.run .mfig{animation:mside 3.2s ease-in-out infinite}
+@keyframes mside{0%,100%{transform:translateX(-70%)}25%,75%{transform:translateX(0) translateY(-6%)}50%{transform:translateX(70%)}}
+.m-sway .mfig{transform-origin:50% 95%}
+.m-sway.run .mfig{animation:msway 2.6s ease-in-out infinite alternate}
+@keyframes msway{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+.mbreath{position:absolute;left:50%;top:50%;width:70%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%) scale(.6);background:radial-gradient(circle,rgba(18,168,184,.3),rgba(18,168,184,0) 70%)}
+.m-breathe.run .mbreath{animation:mbreath 8s ease-in-out infinite}
+@keyframes mbreath{50%{transform:translate(-50%,-50%) scale(1.15)}}
+.m-breathe.run .mfig{animation:mbreathf 8s ease-in-out infinite}
+@keyframes mbreathf{50%{transform:scale(1.15) translateY(-4%)}}
+.fpath{position:absolute;left:50%;top:46%;width:100px;height:100px}
+.fpath .mfig{position:absolute;left:0;top:0;font-size:30px;offset-path:path('M50 50 C70 18 96 28 93 50 C90 74 66 72 50 50 C34 28 10 26 7 50 C4 74 30 82 50 50');offset-rotate:0deg}
+.m-fly.run .fpath .mfig{animation:mfly 5s linear infinite}
+@keyframes mfly{from{offset-distance:0%}to{offset-distance:100%}}
+.ldraw{position:absolute;left:50%;top:46%;width:100px;height:100px}
+.ldraw svg{position:absolute;inset:0;overflow:visible}
+.lguide,.lpen{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.lguide{stroke:rgba(139,92,246,.18)}
+.lpen{stroke:var(--c-pensar);stroke-dasharray:100;stroke-dashoffset:100}
+.m-letter.run .lpen{animation:lpen 3.4s ease-in-out infinite}
+@keyframes lpen{0%{stroke-dashoffset:100;opacity:0}3%{opacity:1}75%,100%{stroke-dashoffset:0;opacity:1}}
+.lfinger{position:absolute;left:0;top:0;display:block;width:28px;height:28px;font-size:24px;line-height:1;offset-rotate:0deg;offset-anchor:52% 6%}
+.lfinger .e3d{width:100%;height:100%;vertical-align:0}
+.m-letter.run .lfinger{animation:lfing 3.4s ease-in-out infinite}
+@keyframes lfing{0%{offset-distance:0%}75%,100%{offset-distance:100%}}
+.m-letter .mbox{top:46%;bottom:auto;transform:translate(-50%,-50%)}
+.m-letter .mfig{font-size:clamp(64px,19vw,96px)}
+.m-letter.fig-left .mbox{left:36%}
+.m-clap .mbox{top:50%;bottom:auto;transform:translate(-50%,-50%)}
+.m-clap .mfig.beat{animation:mclap .4s}
+@keyframes mclap{30%{transform:scale(1.25) rotate(-6deg)}}
+.mrip{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px;border-radius:50%;border:5px solid var(--sun);opacity:0}
+.mrip.beat{animation:mrip .6s ease-out}
+@keyframes mrip{0%{opacity:.9;transform:scale(.5)}100%{opacity:0;transform:scale(1.35)}}
+.clapw{display:flex;align-items:center;justify-content:center;gap:12px}
+.cpic{font-size:54px;line-height:1}
+.m-dance.run .mfig{animation:mdance .9s ease-in-out infinite alternate}
+@keyframes mdance{0%{transform:rotate(-10deg)}50%{transform:translateY(-10%)}100%{transform:rotate(10deg)}}
+.mnote{position:absolute;bottom:28%;font-size:30px;font-weight:700;color:var(--c-pensar);opacity:0}
+.n1{left:18%}.n2{left:74%}.n3{left:46%}
+.m-dance.run .mnote{animation:mnote 2.4s linear infinite}
+.m-dance.run .n2{animation-delay:.8s}.m-dance.run .n3{animation-delay:1.6s}
+@keyframes mnote{0%{opacity:0;transform:translateY(0) rotate(-10deg)}15%{opacity:1}100%{opacity:0;transform:translateY(-170px) rotate(15deg)}}
+.mice{position:absolute;inset:0;background:linear-gradient(135deg,rgba(185,228,255,.6),rgba(255,255,255,.15));opacity:0;transition:opacity .2s;pointer-events:none;z-index:2}
+.frozen .mice{opacity:1}
+.frozen .mfig{filter:saturate(.35) brightness(1.1)}
+.mstop{position:absolute;top:12px;left:50%;transform:translateX(-50%) scale(.6);font-family:var(--f-kid);font-weight:700;font-size:26px;color:#fff;background:var(--coral);padding:4px 16px;border-radius:20px;opacity:0;z-index:3;transition:opacity .15s,transform .2s}
+.frozen .mstop{opacity:1;transform:translateX(-50%) scale(1)}
+.mcount{position:absolute;top:10px;right:10px;width:62px;height:62px;z-index:3}
+.mring{width:100%;height:100%;transform:rotate(-90deg)}
+.mring circle{fill:none;stroke-width:5}
+.mring .bg{stroke:rgba(255,255,255,.85)}
+.mring .fg{stroke:var(--c-pensar);stroke-dasharray:100;stroke-dashoffset:100;stroke-linecap:round;transition:stroke-dashoffset .3s}
+.mnum{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-kid);font-weight:700;font-size:24px;color:var(--t-pensar)}
+.mnum.pop{animation:pop .35s}
+@media (prefers-reduced-motion: reduce){.mstage *{animation-duration:0s!important;animation-iteration-count:1!important}}
+
+/* Cantar e Dançar */
+.cant .mstage{min-height:190px;background:linear-gradient(#FFE3F3,#FFF6FB 72%);box-shadow:inset 0 0 0 3px #F6C2E0}
+.cant .bdone{gap:12px;align-items:center;min-height:0;padding:4px 0 8px}
+.cant .bdone[hidden]{display:flex;visibility:hidden}
+.cant .mfig{font-size:clamp(70px,22vw,112px)}
+.cant .mbox{bottom:13%}
+.m-roda.run .mnote{animation:mnote 2.4s linear infinite}
+.m-roda.run .n2{animation-delay:.8s}.m-roda.run .n3{animation-delay:1.6s}
+.mvchip{position:absolute;top:10px;left:10px;z-index:3;display:flex;align-items:center;gap:6px;max-width:calc(100% - 92px);background:#fff;border-radius:22px;padding:4px 12px 4px 6px;box-shadow:0 3px 0 rgba(166,30,124,.25)}
+.mvico{font-size:40px;line-height:1;display:inline-block}
+.mvlab{font-family:var(--f-kid);font-size:18px;line-height:1.1;color:var(--t-cantar)}
+.mvchip.pop{animation:pop .4s}
+.mstage.run .mvico{animation:mwig var(--bt) ease-in-out infinite alternate}
+@keyframes mwig{from{transform:rotate(-12deg)}to{transform:rotate(12deg) scale(1.1)}}
+.lyr{background:#fff;border-radius:22px;padding:10px 14px;text-align:center;box-shadow:0 4px 0 var(--c-cantar);border:3px solid var(--c-cantar)}
+.lyr p{margin:0}
+.lyr-now{font-family:var(--f-kid);font-weight:700;font-size:clamp(21px,6.2vw,32px);line-height:1.3;color:var(--ink-soft);min-height:2.6em;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0 .32em}
+.lyr-now .lw{display:inline-flex;font-weight:inherit;white-space:nowrap}
+.lyr-now span{border-radius:8px;padding:0 1px;transition:background .12s,color .12s}
+.lyr-now span.done{color:var(--t-cantar)}
+.lyr-now span.on{background:var(--c-cantar);color:#fff;box-shadow:0 0 0 3px var(--c-cantar)}
+.lyr-next{font-family:var(--f-kid);font-size:clamp(15px,4.4vw,20px);color:var(--ink-soft);opacity:.6;min-height:1.3em}
+/* passos: movimentos contínuos (no ritmo da música, --bt = 1 tempo) */
+:where(.cant .mstage.run) .mfig{animation-duration:calc(var(--bt)*2);animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}
+.mv-roda.run .mfig{animation:mroda calc(var(--bt)*4) linear infinite}
+@keyframes mroda{to{transform:rotateY(360deg)}}
+.mv-meia.run .mfig{animation-name:mmeia}
+@keyframes mmeia{from{transform:rotateY(0)}to{transform:rotateY(180deg)}}
+.mv-nada.run .mfig,.mv-passa.run .mfig{animation-name:mpassa}
+@keyframes mpassa{from{transform:translateX(-35%) rotate(-8deg)}to{transform:translateX(35%) rotate(8deg)}}
+.mv-zigue.run .mfig{animation-name:mzigue;animation-duration:var(--bt)}
+@keyframes mzigue{from{transform:translateX(-28%) rotate(-10deg)}to{transform:translateX(28%) rotate(10deg)}}
+.mv-balanca.run .mfig,.mv-rema.run .mfig{animation-name:mbal}
+@keyframes mbal{from{transform:rotate(-13deg)}to{transform:rotate(13deg)}}
+.mv-voa.run .mfig{animation-name:mvoa}
+@keyframes mvoa{from{transform:translate(-22%,-4%) scale(1,.92)}to{transform:translate(22%,-30%) scale(1.06,1)}}
+.mv-mexe.run .mfig{animation:mmexe calc(var(--bt)*2) linear infinite}
+@keyframes mmexe{from{transform:rotate(0) translateX(16%) rotate(0)}to{transform:rotate(360deg) translateX(16%) rotate(-360deg)}}
+.mv-samba.run .mfig{animation-name:mdance;animation-duration:var(--bt)}
+.mv-perna.run .mfig{animation-name:mperna}
+@keyframes mperna{from{transform:rotate(-15deg) translateY(-6%)}to{transform:rotate(15deg) translateY(-6%)}}
+.mv-puxa.run .mfig{animation-name:mpuxa}
+@keyframes mpuxa{from{transform:translateY(12%) scale(.94)}to{transform:translateY(-28%) scale(1.06)}}
+.mv-abraco.run .mfig{animation-name:mabraco}
+@keyframes mabraco{from{transform:scale(1)}to{transform:scale(.86,1.04)}}
+.mv-olho.run .mfig,.mv-nariz.run .mfig,.mv-tapa.run .mfig,.mv-peito.run .mfig,.mv-aponta.run .mfig,.mv-saude.run .mfig,.mv-bebe.run .mfig,.mv-tchau.run .mfig{animation-name:mpose;animation-duration:var(--bt)}
+@keyframes mpose{from{transform:scale(1)}to{transform:scale(1.08) translateY(-4%)}}
+/* passos que batem junto com a música */
+.mv-pula.run .mfig,.mv-marcha.run .mfig,.mv-corre.run .mfig,.mv-palma.run .mfig,.mv-pe.run .mfig,.mv-tira.run .mfig,.mv-nao.run .mfig{animation:none}
+.mv-pula .mfig.beat{animation:mjump calc(var(--bt)*1.9) cubic-bezier(.3,.7,.4,1)}
+.mv-pula .mshadow.beat{animation:mshadow calc(var(--bt)*1.9)}
+.mv-marcha .mfig.beat,.mv-pe .mfig.beat{animation:mstomp calc(var(--bt)*.95) ease-in}
+.mv-corre .mfig.beat{animation:mhop calc(var(--bt)*.95)}
+.mv-palma .mfig.beat{animation:mclap calc(var(--bt)*.9)}
+.mv-tira .mfig.beat{animation:mtira calc(var(--bt)*.95)}
+@keyframes mtira{40%{transform:translateY(-22%) scale(1.05)}100%{transform:none}}
+.mv-nao .mfig.beat{animation:mnao calc(var(--bt)*.95)}
+@keyframes mnao{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.cant .mrip{border-color:var(--c-cantar)}
+.cant .mnum{color:var(--t-cantar);font-size:20px}
+.cant .mring .fg{stroke:var(--c-cantar)}
+
 @media (max-width:560px){
   .stages{gap:14px}
   .st{grid-column:span 3}
+  .st:last-child:nth-child(odd){grid-column:span 6}
   .hero{grid-template-columns:auto minmax(0,1fr)}
   .hero .lelo{width:84px}
   .nx-txt strong{font-size:19px}
@@ -519,7 +707,10 @@ const STAGES=[
  {id:'sons',name:'O Som das Letras',icon:'<span class="emo">👂</span>',on:'#fff',intro:'O som das letras. Escolha uma letra.',units:[]},
  {id:'silabas',name:'Juntando os Sons',icon:'BA',on:'#fff',intro:'Juntando os sons. Escolha uma família.',units:[]},
  {id:'ler',name:'Começando a Ler',icon:'<span class="emo">📖</span>',on:'#fff',intro:'Começando a ler. Escolha uma leitura.',units:[]},
- {id:'pensar',name:'Pensar e Mexer',icon:'<span class="emo">🧩</span>',on:'#fff',intro:'Pensar e mexer. Jogos para pensar, para mexer o corpo e para dirigir carros e trens. Escolha um jogo.',units:[]}
+ {id:'pensar',name:'Pensar e Mexer',icon:'<span class="emo">🤹</span>',on:'#fff',intro:'Pensar e mexer. Jogos para pensar, para mexer o corpo e para dirigir carros e trens. Escolha um jogo.',units:[]},
+ {id:'cuidar',name:'Cuidar de Mim',icon:'<span class="emo">🧼</span>',on:'#fff',intro:'Cuidar de mim. Vamos aprender a ficar limpinhos. Escolha uma brincadeira.',units:[]},
+ {id:'quebra',name:'Quebra-cabeças',icon:'<span class="emo">🧩</span>',on:'#fff',intro:'Quebra-cabeças. Monte letras e figuras. Escolha um quebra-cabeça.',units:[]},
+ {id:'cantar',name:'Cantar e Dançar',icon:'<span class="emo">🎶</span>',on:'#fff',intro:'Cantar e dançar. Cantigas de roda para cantar e mexer o corpo. Escolha uma música.',units:[]}
 ];
 const STAGE=id=>STAGES.find(s=>s.id===id);
 const UNITS={},ACTS={};
@@ -581,39 +772,143 @@ const GAMES=[
  {id:'caminhos',group:'Mexer',type:'caminho',big:'🛤️',name:'Caminhos',say:'Passe o dedo no caminho e leve cada amigo até o lugar certo.',st:['🐌','caracol']},
  {id:'sombra',group:'Mexer',type:'sombra',big:'🔦',name:'Ache a sombra',say:'Arraste cada figura até a sombra dela.',st:['🦩','flamingo']},
  {id:'bolhas',group:'Mexer',type:'bolhas',big:'🫧',name:'Estoure as bolhas',say:'Estoure as bolhas com o dedo.',st:['🐠','peixinho']},
- {id:'corpo',group:'Mexer',type:'corpo',big:'🤸',name:'Mexa o corpo',say:'Hora de sair da tela e mexer o corpo! Faça o que o Lelo pedir.',st:['🦙','lhama']},
+ {id:'corpo',group:'Mexer',type:'corpo',big:'🤸',name:'Mexa o corpo',say:'Hora de sair da tela e mexer o corpo, com música! Faça o que o Lelo pedir.',st:['🦙','lhama']},
+ {id:'estatua',group:'Mexer',type:'estatua',big:'💃',name:'Dança da estátua',say:'Dance com a música e vire estátua quando ela parar!',st:['🐪','camelo']},
  {id:'garagem',group:'Carros e trens',type:'garagem',big:'🚗',name:'Dirija até a garagem',say:'Arraste o carro pela estrada até a garagem certa.',st:['🦦','lontra']},
  {id:'estrada',group:'Carros e trens',type:'estrada',big:'🏎️',name:'Corrida das estrelas',say:'Dirija o carro, pegue as estrelas e desvie das pedras.',st:['🐆','onça']},
  {id:'trem',group:'Carros e trens',type:'trem',big:'🚂',name:'Trem das sílabas',say:'Coloque as sílabas nos vagões e o trem sai andando.',st:['🦫','castor']}
 ];
-const GAME_PATH=['caminhos','garagem','sequencia','bolhas','corpo','diferente','estrada','sombra','trem','tamanhos','memoria'];   // ordem em que entram na trilha recomendada
+const GAME_PATH=['caminhos','garagem','sequencia','bolhas','corpo','diferente','estrada','estatua','sombra','trem','tamanhos','memoria'];   // ordem em que entram na trilha recomendada
 GAMES.forEach(g=>addUnit('pensar',{id:g.id,group:g.group,big:`<span class="emo">${g.big}</span>`,html:true,caption:g.name,say:g.say,st:g.st,need:'este jogo',
   acts:[{type:g.type,label:g.name,say:g.name,icon:`<span class="emo">${g.big}</span>`}]}));
 /* Carros e trens + Mexa o corpo */
 const GARAGE_PICS=[['🐶','cachorro'],['🐱','gato'],['🐰','coelho'],['🐸','sapo'],['🐮','vaca'],['🦆','pato'],['🐻','urso'],['🐒','macaco']];
 const BODY=[
- {e:'🐸',say:'Fique em pé e pule três vezes, como um sapo! Conte comigo.',count:['Um!','Dois!','Três!'],praise:'Que pulos de sapo!'},
- {e:'✈️',say:'Abra bem os braços e voe pela sala, como um avião!',secs:6,praise:'Que avião bonito!'},
- {e:'🐢',say:'Ande bem devagarinho, como a tartaruga Lelo.',secs:6,praise:'Devagar e sempre!'},
- {e:'🧘',say:'Estique os braços lá para cima, bem alto. Agora respire fundo.',secs:5,praise:'Que alongamento!'},
- {e:'🦩',say:'Fique num pé só, como o flamingo. Conte comigo.',count:['Um!','Dois!','Três!','Quatro!','Cinco!'],praise:'Que equilíbrio!'},
- {e:'🐘',say:'Ande pesado como um elefante: tum, tum, tum!',secs:5,praise:'Que elefante forte!'},
- {e:'🐰',say:'Agache e pule para a frente, como um coelho! Conte comigo.',count:['Um!','Dois!','Três!'],praise:'Que coelho pulador!'}
+ {e:'🐸',anim:'jump',count:true,song:'pula',say:'Fique em pé e pule como um sapo! Vamos contar os pulos.',praise:'Que pulos de sapo!'},
+ {e:'🐰',anim:'hop',count:true,song:'pula',say:'Agache e pule para a frente, como um coelho! Vamos contar.',praise:'Que coelho pulador!'},
+ {e:'🐘',anim:'stomp',count:true,word:'Tum!',song:'marcha',say:'Ande pesado como um elefante. Bata o pé no chão: tum, tum, tum!',praise:'Que elefante forte!'},
+ {e:'✈️',anim:'fly',song:'danca',say:'Abra bem os braços e voe pela sala, como um avião!',praise:'Que avião bonito!',cues:['Voa, voa!','Agora faz a curva!','Mais alto!']},
+ {e:'🐢',anim:'walk',song:'devagar',say:'Ande bem devagarinho, como a tartaruga Lelo.',praise:'Devagar e sempre!',cues:['Devagarinho...','Bem devagar...']},
+ {e:'🦀',anim:'side',song:'danca',say:'Ande de lado, como um caranguejo! Para um lado e para o outro.',praise:'Que caranguejo esperto!',cues:['Para o outro lado!','De lado, de lado!']},
+ {e:'🧘',anim:'breathe',song:'devagar',say:'Estique os braços lá para cima e respire fundo, junto comigo.',praise:'Que alongamento!',cues:['Puxa o ar...','Solta devagar...'],cueEvery:4},
+ {e:'🦩',anim:'sway',song:'devagar',say:'Fique num pé só, como o flamingo. Se cair, tudo bem: tente de novo!',praise:'Que equilíbrio!',cues:['Equilibra!','Agora troca de pé!']}
 ];
 const BODY_LETTERS=[
- {e:'O',say:'Faça a letra O com os braços, bem redonda, em cima da cabeça.',secs:5,praise:'Que letra O bonita!'},
- {e:'A',say:'Desenhe a letra A bem grande no ar, com o dedo.',secs:6,praise:'Você desenhou o A no ar!'},
- {e:'I',say:'Fique bem reto, com os braços colados no corpo. Você virou a letra I!',secs:5,praise:'Você é a letra I!'},
- {e:'U',say:'Desenhe a letra U no ar, com o dedo: desce, faz a curva e sobe.',secs:6,praise:'Que U caprichado!'}
+ {L:'O',fig:'🧒',path:'M50 6 C76 6 90 26 90 50 C90 74 74 94 50 94 C26 94 10 74 10 50 C10 26 24 6 50 6',say:'Faça a letra O com os braços, bem redonda, em cima da cabeça.',praise:'Que letra O bonita!',cues:['Bem redondinha!','Segure o O!']},
+ {L:'A',fig:'☝️',path:'M18 92 L50 8 L82 92 L69 60 L31 60',say:'Desenhe a letra A bem grande no ar, com o dedo. Siga o dedinho!',praise:'Você desenhou o A no ar!',cues:['Sobe, desce, e o tracinho!','De novo, bem grande!']},
+ {L:'I',fig:'🧍',left:true,path:'M80 8 L80 92',say:'Fique bem reto, com os braços colados no corpo. Você virou a letra I!',praise:'Você é a letra I!',cues:['Bem retinho!','Parado como o I!']},
+ {L:'U',fig:'☝️',path:'M20 8 L20 58 C20 98 80 98 80 58 L80 8',say:'Desenhe a letra U no ar, com o dedo: desce, faz a curva e sobe.',praise:'Que U caprichado!',cues:['Desce, curva e sobe!','De novo!']},
+ {L:'C',fig:'☝️',path:'M80 22 C70 8 52 6 40 10 C18 18 10 40 12 56 C16 80 34 92 52 92 C66 92 76 86 82 78',say:'Desenhe a letra C no ar, como uma lua. Siga o dedinho!',praise:'Que C bonito!',cues:['Como uma lua!','De novo!']}
 ];
+const BODY_DUR={curto:{secs:10,reps:5},medio:{secs:20,reps:10},longo:{secs:30,reps:15}};
+const bodyDur=()=>BODY_DUR[DB.settings.bodyDur]||BODY_DUR.medio;
+const NUMS=['um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','onze','doze','treze','catorze','quinze','dezesseis','dezessete','dezoito','dezenove','vinte','vinte e um','vinte e dois','vinte e três','vinte e quatro','vinte e cinco','vinte e seis','vinte e sete','vinte e oito','vinte e nove','trinta'];
+/* Cuidar de Mim (higiene): figura, nome, onde fica cada sujeira (x,y de 0 a 1 sobre a figura) */
+const HYG_BATH=[
+ ['🧸','ursinho',[[.46,.22],[.5,.6],[.25,.58],[.75,.58],[.33,.86],[.67,.86]]],
+ ['🐶','cachorro',[[.3,.34],[.7,.34],[.5,.56],[.32,.76],[.68,.76]]],
+ ['🐷','porquinho',[[.5,.27],[.3,.42],[.7,.42],[.25,.68],[.75,.68],[.5,.88]]]
+];
+const HYG_STEPS={
+ dentes:[['🪥','pegar a escova com pasta'],['🦷','escovar todos os dentes'],['🥛','enxaguar a boca'],['😁','sorrir com os dentes limpinhos']],
+ maos:[['🚰','molhar as mãos'],['🧼','passar sabão'],['👐','esfregar bem'],['💧','enxaguar'],['🧻','secar as mãos']]
+};
+const CARE=[
+ {id:'banho',type:'banho',big:'🛁',name:'Banho nos bichinhos',say:'Vamos dar banho no ursinho e nos amigos dele.',st:['🐹','hamster']},
+ {id:'dentes',type:'dentes',big:'🪥',name:'Escovar os dentes',say:'Vamos escovar os dentes e espantar os bichinhos da cárie.',st:['🐻‍❄️','urso-polar']},
+ {id:'maos',type:'maos',big:'🧼',name:'Lavar as mãos',say:'Vamos aprender a lavar as mãos do jeito certo.',st:['🐨','coala']}
+];
+CARE.forEach(g=>addUnit('cuidar',{id:g.id,group:'Higiene',big:`<span class="emo">${g.big}</span>`,html:true,caption:g.name,say:g.say,st:g.st,need:'esta brincadeira',
+  acts:[{type:g.type,label:g.name,say:g.name,icon:`<span class="emo">${g.big}</span>`}]}));
+/* Quebra-cabeças: letras e figuras ([figura, nome, artigo]) */
+const PUZ=[
+ {id:'vogais',group:'Letras',kind:'letter',items:['A','E','O','U'],grid:[2,2],big:'A',name:'Vogais em 4 peças',say:'Quebra-cabeças de vogais, com 4 peças.',st:['🐡','baiacu']},
+ {id:'consoantes',group:'Letras',kind:'letter',items:['B','M','P','D','R','S'],grid:[3,2],big:'B',name:'Letras em 6 peças',say:'Quebra-cabeças de letras, com 6 peças.',st:['🦢','cisne']},
+ {id:'bichos',group:'Figuras',kind:'pic',items:[['🦁','leão','o'],['🐘','elefante','o'],['🐢','tartaruga','a'],['🐼','panda','o']],grid:[2,2],big:'🦁',name:'Bichos em 4 peças',say:'Quebra-cabeças de bichos, com 4 peças.',st:['🐑','ovelha']},
+ {id:'veiculos',group:'Figuras',kind:'pic',items:[['🚒','caminhão de bombeiro','o'],['🚜','trator','o'],['🚀','foguete','o'],['🚌','ônibus','o']],grid:[3,2],big:'🚒',name:'Veículos em 6 peças',say:'Quebra-cabeças de veículos, com 6 peças.',st:['🦊','raposa']},
+ {id:'grandes',group:'Figuras',kind:'pic',items:[['🦄','unicórnio','o'],['🐙','polvo','o'],['🦋','borboleta','a'],['🏰','castelo','o']],grid:[3,3],big:'🦄',name:'Figuras em 9 peças',say:'Quebra-cabeças com 9 peças. Esse é mais difícil!',st:['🐿️','esquilo']}
+];
+PUZ.forEach(z=>{const L=z.kind==='letter';addUnit('quebra',{id:z.id,group:z.group,big:L?z.big:`<span class="emo">${z.big}</span>`,html:!L,pic:'🧩',caption:z.name,say:z.say,st:z.st,need:'este quebra-cabeça',
+  acts:[{type:'puzzle',label:z.name,say:z.name,icon:L?z.big:`<span class="emo">${z.big}</span>`}]});});
+/* Cantar e Dançar: cantigas de roda tradicionais (folclore, domínio público). Arranjo e acompanhamento próprios, tocados pelo aparelho.
+   Melodia: notas em solfejo (minúscula = oitava de baixo, MAIÚSCULA = de cima), "~" segura a sílaba anterior, "." é pausa.
+   Letra: "-" separa sílabas, espaço separa palavras, "_" junta duas palavras numa nota só. d = duração de cada nota em colcheias (padrão: 1, e a última 2). */
+const DMOVES={
+ roda:['🔄','Rode'],meia:['🔁','Meia volta!'],marcha:['🥁','Marche'],corre:['🏃','Corra no lugar'],pula:['🐸','Pule'],saude:['🫡','Continência'],
+ passa:['🤲','Passe de lado'],tira:['🙌','Sobe e desce'],zigue:['↔️','Zigue-zague'],nada:['🏊','Nade'],abraco:['🤗','Abrace'],balanca:['🌊','Balance'],
+ voa:['🦋','Voe'],mexe:['🥄','Mexa a panela'],perna:['🦵','Levante a perna'],olho:['👀','Faça óculos'],nariz:['👃','Toque o nariz'],
+ nao:['☝️','Não, não!'],pe:['🦶','Bata o pé'],tapa:['🤢','Tape o nariz'],samba:['💃','Requebre'],rema:['🚣','Reme'],puxa:['💪','Puxe para cima'],
+ palma:['👏','Bata palmas'],aponta:['👉','Aponte'],peito:['🫶','Mão no coração'],bebe:['🥤','Beba água'],tchau:['👋','Dê tchau']};
+const DBEAT=['pula','marcha','corre','palma','pe','tira','nao'];   // movimentos que batem junto com cada nota
+const CANT=[
+ {id:'ciranda',name:'Ciranda, cirandinha',fig:'👧',st:['🐥','pintinho'],key:'F',bpm:100,
+  say:'Ciranda, cirandinha! Dê as mãos para alguém, ou abra os braços, e rode. Quando ouvir meia volta, vire para o outro lado!',
+  lines:[['do fa fa la la DO DO','Ci-ran-da, ci-ran-di-nha','roda'],['sib la sol DO la sol fa','va-mos to-dos ci-ran-dar','roda'],
+   ['la DO sib la sol fa mi do','va-mos dar a mei-a vol-ta','meia','1 1 1 1 1 1 1 1'],['sib sol la fa sol mi fa','vol-ta_e mei-a va-mos dar','roda']]},
+ {id:'marcha',name:'Marcha soldado',fig:'💂',st:['🦖','dinossauro'],key:'C',bpm:112,groove:'marcha',
+  say:'Marcha soldado! Levante bem os joelhos e marche no lugar. No final, bata continência!',
+  lines:[['sol sol mi do do','Mar-cha, sol-da-do','marcha'],['mi sol sol sol mi re','ca-be-ça de pa-pel','marcha'],['mi fa fa fa re sol sol','quem não mar-char di-rei-to','marcha'],
+   ['la sol fa mi re do','vai pre-so pro quar-tel','marcha'],['do mi sol sol mi do do','O quar-tel pe-gou fo-go','corre'],['do mi sol sol sol mi re','São Fran-cis-co deu si-nal','corre'],
+   ['mi fa# fa# fa# fa# re re sol sol','A-co-de, a-co-de, a-co-de','pula','1 1 2 1 1 2 1 1 2'],['sol la sol fa mi re do','a ban-dei-ra na-cio-nal','saude']]},
+ {id:'escravos',name:'Escravos de Jó',fig:'🪨',st:['🦏','rinoceronte'],key:'C',bpm:104,
+  say:'Escravos de Jó! Passe as mãos de um lado para o outro, levante e abaixe no tira e põe, e faça zigue-zague no final!',
+  lines:[['sol DO si la sol la sol la sol fa mi','Es-cra-vos de Jó jo-ga-vam ca-xan-gá','passa','1 1 1 1 2 1 1 1 1 1 2'],
+   ['sol mi sol mi sol mi sol do mi mi re do','Ti-ra, põe, dei-xa o Zé Pe-rei-ra fi-car','tira','1 1 2 1 1 1 1 1 1 1 1 2'],
+   ['sol la sol mi sol la sol mi sol la sol la si DO','Guer-rei-ros com guer-rei-ros fa-zem zi-gue zi-gue zá','zigue'],
+   ['sol la sol mi sol la sol mi sol la sol la si DO','Guer-rei-ros com guer-rei-ros fa-zem zi-gue zi-gue zá','zigue']]},
+ {id:'peixe',name:'Peixe vivo',fig:'🐟',st:['🐋','baleia'],key:'C',bpm:96,groove:'calma',
+  say:'Peixe vivo! Mexa os braços e nade como um peixinho. Quando a música subir, dê um abraço bem gostoso em você.',
+  lines:[['mi sol sol fa fa la la sol','Co-mo po-de_um pei-xe vi-vo','nada','1 1 1 1 1 1 1 1'],['mi sol sol fa re fa fa mi','vi-ver fo-ra da_á-gua fri-a','nada'],
+   ['mi sol sol fa fa la la sol','Co-mo po-de_um pei-xe vi-vo','nada','1 1 1 1 1 1 1 1'],['mi sol sol fa re fa fa mi','vi-ver fo-ra da_á-gua fri-a','nada'],
+   ['DO DO la si DO si la ~sol','Co-mo po-de-rei vi-ver','abraco','1 1 1 1 1 1 1 1'],['DO DO la si DO si la ~sol','Co-mo po-de-rei vi-ver','abraco'],
+   ['mi sol sol fa fa la la sol','sem a tu-a, sem a tu-a','balanca','1 1 1 1 1 1 1 1'],['mi sol sol fa re fa fa mi','sem a tu-a com-pa-nhi-a','balanca'],
+   ['mi sol sol fa fa la la sol','sem a tu-a, sem a tu-a','balanca','1 1 1 1 1 1 1 1'],['mi sol sol fa re mi do do','sem a tu-a com-pa-nhi-a','balanca']]},
+ {id:'borboletinha',name:'Borboletinha',fig:'🦋',st:['🐛','lagarta'],key:'C',bpm:108,
+  say:'Borboletinha! Abra os braços e voe. Depois mexa a panela, levante a perna, faça óculos com as mãos e toque o nariz!',
+  lines:[['sol la sol DO DO','Bor-bo-le-ti-nha','voa'],['sol la sol si si','tá na co-zi-nha','voa'],['sol la la sol sol si si','fa-zen-do cho-co-la-te','mexe'],
+   ['sol la si DO DO','pa-ra_a ma-dri-nha','voa'],['sol la sol DO','Po-ti, po-ti','pula'],['sol la sol si','per-na de pau','perna'],
+   ['sol la sol si si','o-lho de vi-dro','olho'],['sol sol la la si si DO','e na-riz de pi-ca-pau','nariz']]},
+ {id:'sapo',name:'O sapo não lava o pé',fig:'🐸',st:['🦎','lagartixa'],key:'C',bpm:112,
+  say:'O sapo não lava o pé! Pule como um sapo, balance o dedo dizendo não, bata o pé e, no final, tape o nariz: que chulé!',
+  lines:[['sol DO DO sol la sol mi','O sa-po não la-va_o pé','pula'],['sol DO DO sol la sol fa','não la-va por-que não quer','nao'],
+   ['sol la sol si si sol la sol','e-le mo-ra lá na la-goa','balanca','1 1 1 1 1 1 1 1'],['si si sol la sol si si','não la-va_o pé por-que_não quer','pe'],['sol la si DO','mas que chu-lé!','tapa']]},
+ {id:'sambalele',name:'Samba lelê',fig:'💃',st:['🦃','peru'],key:'F',bpm:116,groove:'samba',
+  say:'Samba lelê! Requebre, mexa os ombros e, quando ouvir pisa na barra da saia, bata o pé no chão!',
+  lines:[['fa la fa la sol sib sib sib','Sam-ba, sam-ba, sam-ba_ô le-lê','samba'],['mi mi fa sol fa mi fa la ~la la','Sam-ba, sam-ba, sam-ba ô la-lá','samba'],
+   ['fa la fa la sol sib sib sib','Sam-ba, sam-ba, sam-ba_ô le-lê','samba'],['mi mi fa sol fa mi fa la la la','Pi-sa na bar-ra da sai-a_ô la-lá','pe'],
+   ['fa la fa la sol sib sib sib','Sam-ba, sam-ba, sam-ba_ô le-lê','samba'],['mi mi fa sol fa mi fa la ~la la','Sam-ba, sam-ba, sam-ba ô la-lá','samba'],
+   ['fa la fa la sol sib sib sib','Sam-ba, sam-ba, sam-ba_ô le-lê','samba'],['mi mi fa sol fa mi fa la la la','Pi-sa na bar-ra da sai-a_ô la-lá','pe']]},
+ {id:'canoa',name:'A canoa virou',fig:'🛶',st:['🦈','tubarão'],key:'F',bpm:104,groove:'calma',
+  say:'A canoa virou! Sente no chão e reme. Quando a canoa virar, dê uma voltinha. Depois nade e puxe a Aninha lá do fundo do mar!',
+  lines:[['do la la la sol fa','A ca-no-a vi-rou','rema'],['fa fa fa mi fa sol','por dei-xá-la vi-rar','roda'],
+   ['fa fa la DO DO DO DO la','foi por cau-sa da A-ni-nha','rema','1 1 1 1 1 1 1 1'],['fa sol sol fa sol la','que não sou-be re-mar','rema'],
+   ['do la la la sol fa','Se_eu fos-se_um pei-xi-nho','nada'],['fa fa fa mi fa sol','e sou-bes-se na-dar','nada'],
+   ['fa fa la DO DO DO DO la','eu ti-ra-va a A-ni-nha','puxa','1 1 1 1 1 1 1 1'],['fa sol sol fa sol la','lá do fun-do do mar','puxa']]},
+ {id:'pirulito',name:'Pirulito que bate bate',fig:'🍭',st:['🐼','panda'],key:'C',bpm:112,
+  say:'Pirulito que bate bate! Bata palmas junto com a música. Depois aponte para alguém e coloque a mão no coração.',
+  lines:[['mi fa sol sol sol fa mi la la','Pi-ru-li-to que ba-te, ba-te','palma'],['re mi fa fa fa mi re sol','pi-ru-li-to que já ba-teu','palma'],
+   ['mi sol sol sol fa mi la DO','quem gos-ta de mim é e-la','aponta'],['si la sol fa mi re do','quem gos-ta de-la sou eu','peito']]},
+ {id:'itororo',name:'Fui no Itororó',fig:'💧',st:['🐎','cavalo'],key:'D',bpm:104,
+  say:'Fui no Itororó! Ande pela sala, faça de conta que bebe água com as mãos, dê uma voltinha e diga tchau!',
+  lines:[['la la la la sol fa#','Fui no I-to-ro-ró','marcha'],['mi fa# sol sol sol fa# mi mi','be-ber á-gua e não a-chei','bebe'],
+   ['RE DO# si si si la si','A-chei be-la mo-re-na','roda'],['DO# si la la la sol la','que no_I-to-ro-ró dei-xei','tchau']]}
+];
+const CANT_DUR={curto:20,medio:45,longo:75};   // segundos de dança, mais ou menos: a música repete até chegar perto disso
+const cantReps=c=>{const one=(compileCant(c,1).total-16)*30/c.bpm;return Math.max(1,Math.round((CANT_DUR[DB.settings.bodyDur]||45)/one));};
+CANT.forEach(c=>addUnit('cantar',{id:c.id,group:'Cantigas de roda',big:`<span class="emo">${c.fig}</span>`,html:true,caption:c.name,say:`${c.name}. Vamos cantar e dançar!`,st:c.st,need:'esta cantiga',
+  acts:[{type:'cantiga',label:c.name,say:'Cantar e dançar '+c.name,icon:'<span class="emo">🎶</span>'}]}));
+const CANT_PATH=CANT.map(c=>'cantar:'+c.id);
+const EXTRA_PATH=['quebra:vogais','cuidar:maos','quebra:bichos','cuidar:dentes','quebra:veiculos','cuidar:banho','quebra:consoantes','quebra:grandes'];   // um a cada 3 letras
 /* Caminho único recomendado: usado na tela inicial, nas etapas, no fim da atividade e na área dos pais */
 const PATH=[];
 (function(){const pushed=new Set(),known=new Set();
   const push=k=>{if(pushed.has(k)||!UNITS[k])return;pushed.add(k);UNITS[k].acts.forEach(a=>PATH.push(a.key));};
-  let gi=0;
+  let gi=0,ei=0,ci=0;
   ORDER.forEach((L,i)=>{known.add(L);push('letras:'+L);push('tracar:'+L);push('sons:'+L);if(FAM[L])push('silabas:'+L);
     STAGE('ler').units.forEach(u=>{if(u.needs.every(x=>known.has(x)))push(u.key);});
-    if(i%2===1&&gi<GAME_PATH.length)push('pensar:'+GAME_PATH[gi++]);});
+    if(i%2===1&&gi<GAME_PATH.length)push('pensar:'+GAME_PATH[gi++]);
+    if(i%3===2&&ei<EXTRA_PATH.length)push(EXTRA_PATH[ei++]);
+    if(i%3===0&&i>0&&ci<CANT_PATH.length)push(CANT_PATH[ci++]);});
   Object.keys(UNITS).forEach(push);
 })();
 
@@ -640,7 +935,7 @@ function pickVoice(){
 if(Voice.supported){pickVoice();speechSynthesis.onvoiceschanged=()=>{const was=Voice.ok;pickVoice();if(was!==Voice.ok&&['home','parents'].includes(S.screen))render();};
   setTimeout(()=>{Voice.checked=true;pickVoice();if(!Voice.ok&&S.screen==='home')render();},1500);}
 let talking=false,speakId=0;
-function setTalking(on){talking=on;$$('.lelo').forEach(l=>l.classList.toggle('talk',on));}
+function setTalking(on){talking=on;if(window.Music)Music.duck(on);$$('.lelo').forEach(l=>l.classList.toggle('talk',on));}
 function say(text,opts={}){
   return new Promise(res=>{
     const id=++speakId;
@@ -662,15 +957,111 @@ function say(text,opts={}){
   });
 }
 function hush(){speakId++;setTalking(false);try{Voice.supported&&speechSynthesis.cancel();}catch(e){}}
-document.addEventListener('visibilitychange',()=>{if(document.hidden)hush();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){hush();if(window.Music)Music.stop();}});
 
 /* Efeitos sonoros */
 let AC=null;
 function ensureAudio(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();}
 function tone(f1,f2,dur,type,when=0,vol=.16){if(!AC||!DB.settings.sfx)return;const t=AC.currentTime+when,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+dur+.05);}
-function sfx(k){if(k==='ok'){tone(660,660,.13,'sine');tone(880,880,.13,'sine',.11);tone(1320,1320,.22,'sine',.22);}else if(k==='no'){tone(320,170,.28,'triangle',0,.2);}else if(k==='win'){[523,659,784,1047].forEach((f,i)=>tone(f,f,.22,'sine',i*.13));}else if(k==='tap'){tone(520,560,.07,'sine',0,.09);}else if(k==='vrum'){tone(70,140,.45,'sawtooth',0,.05);tone(140,90,.3,'sawtooth',.4,.04);}else if(k==='beep'){tone(760,760,.09,'square',0,.05);tone(760,760,.09,'square',.16,.05);}else if(k==='piui'){tone(880,1180,.32,'triangle',0,.1);tone(880,1180,.45,'triangle',.4,.1);}else if(k==='clap'){tone(2200,500,.07,'square',0,.07);}}
+function sfx(k){if(k==='ok'){tone(660,660,.13,'sine');tone(880,880,.13,'sine',.11);tone(1320,1320,.22,'sine',.22);}else if(k==='no'){tone(320,170,.28,'triangle',0,.2);}else if(k==='win'){[523,659,784,1047].forEach((f,i)=>tone(f,f,.22,'sine',i*.13));}else if(k==='tap'){tone(520,560,.07,'sine',0,.09);}else if(k==='vrum'){tone(70,140,.45,'sawtooth',0,.05);tone(140,90,.3,'sawtooth',.4,.04);}else if(k==='beep'){tone(760,760,.09,'square',0,.05);tone(760,760,.09,'square',.16,.05);}else if(k==='piui'){tone(880,1180,.32,'triangle',0,.1);tone(880,1180,.45,'triangle',.4,.1);}else if(k==='clap'){tone(2200,500,.07,'square',0,.07);}else if(k==='scrub'){tone(260,210,.06,'triangle',0,.035);}else if(k==='freeze'){tone(1400,500,.25,'sine',0,.12);tone(1800,900,.2,'sine',.05,.06);}}
 function burst(el){if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=el.getBoundingClientRect(),cols=['#FF8A3D','#FFC93C','#138A7E','#E5487A','#2F8FD8'];
   for(let i=0;i<16;i++){const s=document.createElement('span'),a=Math.random()*Math.PI*2,d=60+Math.random()*80;s.className='cf';s.style.cssText=`left:${b.left+b.width/2}px;top:${b.top+b.height/2}px;background:${cols[i%5]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;document.body.appendChild(s);setTimeout(()=>s.remove(),850);}}
+
+/* ================= Músicas =================
+   Melodias compostas para este app (sem direitos de terceiros), tocadas pelo próprio navegador com a Web Audio API.
+   Cada compasso tem 8 colcheias: nota (ex.: C5), "-" segura a nota anterior, "." é pausa. */
+const NOTE_I={C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+const nfreq=n=>{const m=/^([A-G][#b]?)(\d)$/.exec(n);return 440*Math.pow(2,(NOTE_I[m[1]]+12*(+m[2]+1)-69)/12);};
+const CHORD={C:['C4','E4','G4'],G:['B3','D4','G4'],Am:['A3','C4','E4'],F:['A3','C4','F4'],Dm:['A3','D4','F4'],Bb:['Bb3','D4','F4'],Em:['B3','E4','G4'],D:['A3','D4','F#4'],A:['A3','C#4','E4']};
+const BASS={oct:[1,0,2,0,1,0,2,0],fifth:[1,0,1.5,0,1,0,1.5,0],long:[1,0,0,0,1.5,0,0,0]};
+const SONGS={
+ pula:{name:'Pula Pula',bpm:126,bass:'oct',drums:{k:'x...x...',s:'..x...x.',h:'xxxxxxxx'},chords:['C','G','Am','F','C','G','F','C'],
+  lead:['E5 G5 E5 G5 C6 - G5 -','D5 G5 D5 G5 B5 - G5 -','C5 E5 A5 - G5 E5 C5 -','F5 - A5 - G5 F5 E5 D5','E5 G5 E5 G5 C6 - E6 -','D6 - B5 - G5 A5 B5 -','A5 - C6 - A5 G5 F5 E5','D5 - G4 - C5 - . .']},
+ danca:{name:'Dança do Lelo',bpm:108,bass:'fifth',drums:{k:'x..x..x.',s:'..x...x.',h:'.x.x.x.x'},chords:['F','Dm','Bb','C','F','Dm','Bb','F'],
+  lead:['C5 - A4 C5 F5 - E5 F5','D5 - A4 D5 F5 - E5 D5','D5 - Bb4 D5 F5 - G5 F5','E5 - C5 E5 G5 - . .','A5 - F5 A5 C6 - A5 F5','F5 - D5 F5 A5 - G5 F5','G5 F5 D5 - C5 - E5 G5','F5 - - - . . . .']},
+ devagar:{name:'Devagarinho',bpm:84,bass:'long',drums:{k:'x.......',h:'..x...x.'},chords:['G','Em','C','D','G','Em','C','G'],
+  lead:['B4 - D5 - G5 - - -','B4 - E5 - G5 - - -','C5 - E5 - G5 - E5 -','D5 - F#5 - A5 - - -','B5 - A5 - G5 - D5 -','E5 - G5 - B5 - - -','A5 - G5 - E5 - F#5 -','G5 - - - - - . .']},
+ marcha:{name:'Marcha da Bicharada',bpm:116,bass:'fifth',drums:{k:'x...x...',s:'..x...x.',h:'x.x.x.x.'},chords:['D','A','D','A','G','D','A','D'],
+  lead:['A4 - D5 - F#5 - D5 -','E5 - C#5 - A4 - . .','F#5 - A5 - F#5 - D5 -','E5 - A5 - E5 - . .','B5 - G5 - D5 - G5 -','A5 - F#5 - D5 - F#5 -','E5 - G5 - F#5 - E5 -','D5 - D5 - D5 - . .']}
+};
+var Music={cur:null,timer:null,step:0,next:0,g:null,duckOn:false,noise:null,
+ vol(){return DB.settings.music===false&&!(this.cur&&this.cur.force)?0:(this.duckOn?.14:.42);},
+ setup(){if(!AC)return false;if(!this.g){this.g=AC.createGain();this.g.gain.value=0;this.g.connect(AC.destination);
+   const b=AC.createBuffer(1,Math.floor(AC.sampleRate*.5),AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noise=b;}return true;},
+ play(id){ensureAudio();const s=SONGS[id];if(!s||DB.settings.music===false||!this.setup())return;if(this.cur===s&&this.timer)return;this.stop(true);
+   this.cur=s;this.step=0;this.next=AC.currentTime+.06;const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(this.vol(),t);
+   this.timer=setInterval(()=>this.tick(),25);this.tick();},
+ stop(quick){if(this.timer){clearInterval(this.timer);this.timer=null;}this.cur=null;(this.vt||[]).forEach(clearTimeout);this.vt=[];this.cb=null;
+   if(this.g&&AC){const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(this.g.gain.value,t);this.g.gain.linearRampToValueAtTime(0,t+(quick?.03:.12));}},
+ duck(on){this.duckOn=on;if(this.g&&AC&&this.cur){const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setTargetAtTime(this.vol(),t,.08);}},
+ tick(){const s=this.cur;if(!s||!AC)return;const sd=60/s.bpm/2;if(s.seq){while(this.cur===s&&this.next<AC.currentTime+.15){this.seqStep(s,this.step,this.next,sd);this.next+=sd;this.step++;}return;}while(this.next<AC.currentTime+.15){this.note(s,this.step,this.next,sd);this.next+=sd;this.step++;}},
+ note(s,k,t,sd){const bar=Math.floor(k/8)%s.lead.length,p=k%8,toks=s.lead[bar].split(' '),tk=toks[p];
+   if(tk&&tk!=='-'&&tk!=='.'){let n=1;while(p+n<8&&toks[p+n]==='-')n++;this.lead(nfreq(tk),t,n*sd);}
+   if(p===0||p===4)CHORD[s.chords[bar]].forEach(nm=>this.pad(nfreq(nm),t,sd*3.6));
+   const bp=BASS[s.bass][p];if(bp)this.bass(nfreq(s.chords[bar].replace('m','')+'2')*bp,t,s.bass==='long'?sd*3.8:sd*.95);
+   const D=s.drums;if(D.k&&D.k[p]==='x')this.kick(t);if(D.s&&D.s[p]==='x')this.snare(t);if(D.h&&D.h[p]==='x')this.hat(t);},
+ osc(type,f,t,dur,vol,a,flt){const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);
+   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+(a||.01));g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+   let n=o;if(flt){const fl=AC.createBiquadFilter();fl.type='lowpass';fl.frequency.value=flt;o.connect(fl);n=fl;}n.connect(g).connect(this.g);o.start(t);o.stop(t+dur+.05);},
+ lead(f,t,d){this.osc('square',f,t,Math.max(.14,d*.92),.07,.012,2400);this.osc('sine',f,t,Math.max(.14,d*.92),.08,.012);},
+ pad(f,t,d){this.osc('triangle',f,t,d,.03,.04);},
+ bass(f,t,d){this.osc('triangle',f,t,d,.2,.01);},
+ kick(t){const o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(45,t+.14);
+   g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);o.connect(g).connect(this.g);o.start(t);o.stop(t+.2);},
+ nz(t,dur,vol,type,fr){const s=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();s.buffer=this.noise;f.type=type;f.frequency.value=fr;
+   g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);s.connect(f).connect(g).connect(this.g);s.start(t);s.stop(t+dur+.02);},
+ snare(t){this.nz(t,.14,.2,'bandpass',1900);this.osc('triangle',190,t,.08,.07);},
+ hat(t){this.nz(t,.035,.06,'highpass',7000);}
+};
+
+
+/* Cantigas: transforma a melodia + letra em notas no tempo, com acompanhamento (acordes escolhidos pela própria melodia) */
+CHORD.Gm=['G3','Bb3','D4'];CHORD.Bm=['B3','D4','F#4'];
+const SOLF={do:'C',re:'D',mi:'E',fa:'F',sol:'G',la:'A',si:'B'};
+const solf=t=>{const m=/^(do|re|mi|fa|sol|la|si)(#|b)?$/i.exec(t);if(!m)throw new Error('nota '+t);return SOLF[m[1].toLowerCase()]+(m[2]||'')+(t[0]===t[0].toLowerCase()?4:5);};
+const pcOf=n=>NOTE_I[/^([A-G][#b]?)/.exec(n)[1]];
+const KEYCH={C:['C','G','F','Am','Dm','D'],F:['F','C','Bb','Dm','Gm'],D:['D','A','G','Bm','Em']};
+const GROOVES={base:{k:'x...',s:'..x.',h:'xxxx'},marcha:{k:'x.x.',s:'..xx',h:'x.x.'},calma:{k:'x...',s:'....',h:'..x.'},samba:{k:'x..x',s:'.x.x',h:'xxxx'}};
+function cantLines(c){return c.lines.map(L=>{const notes=L[0].split(' '),syl=[];
+  L[1].split(' ').forEach((w,wi)=>w.split('-').forEach(s=>syl.push({s:s.replace(/_/g,' '),w:wi})));
+  const d=L[3]?L[3].split(' ').map(Number):notes.map((_,i)=>i===notes.length-1?2:1);
+  return{notes,syl,d,mv:L[2]};});}
+function compileCant(c,reps){
+  const ev=[],lines=[],src=cantLines(c);let t=8;
+  for(let r=0;r<reps;r++){
+    src.forEach(L=>{const line={syl:L.syl,mv:L.mv,rep:r,t0:t,idx:lines.length};let si=0;
+      L.notes.forEach((n,i)=>{const hold=n[0]==='~',nm=hold?n.slice(1):n;
+        if(nm!=='.'){const name=solf(nm);ev.push({t,dur:L.d[i],f:nfreq(name),pc:pcOf(name),si:hold?-1:si++,line:line.idx});}
+        t+=L.d[i];});
+      t=Math.ceil(t/4)*4;line.t1=t;lines.push(line);});
+    if(r<reps-1)t+=4;}
+  const total=t+8,bars=total/4,cand=KEYCH[c.key],pcs=cand.map(ch=>CHORD[ch].map(pcOf)),chords=[];
+  for(let b=0;b<bars;b++){
+    if(b<2||b>=bars-2){chords.push(cand[0]);continue;}
+    const a=b*4,z=a+4,sc=cand.map(()=>0);let any=false;
+    ev.forEach(e=>{const o=Math.min(z,e.t+e.dur)-Math.max(a,e.t);if(o<=0)return;any=true;const w=o+(e.t===a?1.5:0);
+      pcs.forEach((p,k)=>{if(p.includes(e.pc))sc[k]+=w;});});
+    if(!any){chords.push(chords[b-1]);continue;}
+    const prev=cand.indexOf(chords[b-1]);if(prev>=0)sc[prev]+=.3;
+    let best=0;sc.forEach((v,k)=>{if(v>sc[best]+1e-9)best=k;});chords.push(cand[best]);}
+  return{seq:true,force:true,bpm:c.bpm,groove:GROOVES[c.groove]||GROOVES.base,ev,lines,chords,total,ei:0,li:0};
+}
+Object.assign(Music,{vt:[],cb:null,
+ seq(sq,cb){ensureAudio();if(!this.setup())return false;this.stop(true);this.cur=sq;this.cb=cb;this.step=0;this.next=AC.currentTime+.08;
+   const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(.0001,t);this.g.gain.linearRampToValueAtTime(this.vol(),t+.05);
+   this.timer=setInterval(()=>this.tick(),25);this.tick();return true;},
+ at(t,fn){this.vt.push(setTimeout(fn,Math.max(0,(t-AC.currentTime)*1000)));},
+ seqStep(s,k,t,sd){
+   if(k>=s.total){clearInterval(this.timer);this.timer=null;this.cur=null;this.at(t,()=>{if(this.cb){const cb=this.cb;this.cb=null;cb('end');}});return;}
+   while(s.li<s.lines.length&&s.lines[s.li].t0===k){const L=s.lines[s.li++];this.at(t,()=>this.cb&&this.cb('line',L));}
+   while(s.ei<s.ev.length&&s.ev[s.ei].t===k){const e=s.ev[s.ei++];this.voice(e.f,t,e.dur*sd);if(e.si>=0)this.at(t,()=>this.cb&&this.cb('syl',e));}
+   const p=k%4,ch=s.chords[k>>2],G=s.groove,intro=k<8,root=nfreq(ch.replace('m','')+'2');
+   if(p===0)CHORD[ch].forEach(nm=>this.pad(nfreq(nm),t,sd*3.8));
+   if(!intro&&(p===0||(p===2&&G!==GROOVES.calma)))this.bass(p===0?root:root*1.5,t,G===GROOVES.calma?sd*3.8:sd*1.8);
+   if(G.k[p]==='x')this.kick(t);if(!intro&&G.s[p]==='x')this.snare(t);if(G.h[p]==='x')this.hat(t);
+   if(k%2===0)this.at(t,()=>this.cb&&this.cb('beat',k));},
+ voice(f,t,d){const D=Math.max(.16,d*.94);this.osc('square',f,t,D,.06,.015,2200);this.osc('sine',f,t,D,.11,.015);this.osc('sine',f*2,t,D*.7,.02,.015);}
+});
 
 /* ================= Progresso ================= */
 let S={screen:'profiles',p:null};
@@ -860,9 +1251,14 @@ const GEN={
     wrongSay:c=>`Essa é a letra ${N(c)}. Estoure só a letra ${N(L)}.`}];},
  corpo(){const fam=[...new Map(Object.values(FAM).flat().map(x=>[x[2],x])).values()].filter(x=>x[0].split('-').length<=3);
    const[s,e,w]=rnd(fam),syls=s.split('-');
-   const clap={e,syls,say:`Bata uma palma para cada pedaço da palavra ${w}. Vamos juntos!`,count:syls.map(x=>sp(x)+'!'),praise:`${cap(w)} tem ${syls.length===2?'dois':'três'} pedaços!`};
+   const clap={e,syls,say:`Bata uma palma para cada pedaço da palavra ${w}. Vamos juntos!`,praise:`${cap(w)} tem ${syls.length===2?'dois':'três'} pedaços!`};
    const picks=shuffle([rnd(BODY_LETTERS),clap,...shuffle(BODY).slice(0,3)]);
-   return picks.map(b=>({body:true,...b,letter:b.e.length===1,prompt:b.say,text:'Hora de mexer o corpo!'}));},
+   return picks.map(b=>({body:true,...b,prompt:b.say,text:'Hora de mexer o corpo!'}));},
+ estatua(){const songs=shuffle(['danca','pula','marcha']),figs=['💃','🕺','🐻'];
+   return songs.map((song,k)=>({freeze:true,song,fig:figs[k],stops:k===2?4:3,
+     prompt:k===0?'Dança da estátua! Dance enquanto a música toca. Quando a música parar, vire estátua: ninguém se mexe!':'Mais uma música! Dance, e quando ela parar, vire estátua!',
+     text:'Dance! Quando a música parar, vire estátua.',praise:k===2?'Você é campeão da estátua!':'Que estátua perfeita!'}));},
+ cantiga(u){const c=CANT.find(x=>x.id===u.id);return[{cant:true,c,prompt:c.say,text:c.name,praise:`Você cantou e dançou ${c.name}!`}];},
  garagem(){const pics=shuffle(GARAGE_PICS),vs=shuffle(VOW);
    return[[2,'pic'],[3,'pic'],[3,'letter'],[3,'letter']].map(([n,kind],k)=>{let T;
      if(kind==='pic')T=pics.splice(0,n).map(([e,w])=>({html:`<span class="emo">${e}</span>`,say:w,aria:w}));
@@ -890,6 +1286,27 @@ const GEN={
      const pool=shuffle(all.flatMap(x=>x[0].split('-')).filter(x=>!syls.includes(x)));
      return{build:true,train:true,word:w,emoji:e,syls,tiles:shuffle([...syls,...[...new Set(pool)].slice(0,syls.length===2?2:1)]),used:[],filled:0,
        prompt:`Monte o trem da palavra ${w}. Toque nas sílabas na ordem: ${syls.map(sp).join(', ')}.`,text:'Coloque as sílabas nos vagões, na ordem.',errLetter:first(w)};});},
+ banho(){return HYG_BATH.map(([e,name,spots])=>({clean:true,e,spots,sz:.18,
+   phases:[{tool:['🧽','esponja'],from:'mud',to:'foam',say:`O ${name} está sujo! Passe a esponja e esfregue a sujeira.`},
+     {tool:['🚿','chuveiro'],from:'foam',to:null,say:'Agora passe o chuveiro para tirar a espuma.'}],
+   text:'Esfregue com o dedo.',praise:`O ${name} está limpinho e cheiroso!`}));},
+ dentes(){const ph=t=>[{tool:['🪥','escova'],from:'germ',to:'foam',say:t},{tool:['🥛','copo de água'],from:'foam',to:null,say:'Agora enxágue com água para tirar a espuma.'}];
+   return[
+   {clean:true,e:'🦷',spots:[[.3,.36],[.68,.32],[.5,.55],[.35,.78],[.65,.78]],sz:.18,phases:ph('Escove o dente para espantar os bichinhos da cárie. Esfregue bem!'),text:'Esfregue com o dedo.',praise:'O dente ficou branquinho!'},
+   {clean:true,e:'😁',spots:[[.3,.6],[.44,.57],[.58,.57],[.71,.6],[.37,.69],[.52,.71],[.66,.69]],sz:.13,phases:ph('Agora escove todos os dentes, de um lado para o outro.'),text:'Esfregue com o dedo.',praise:'Que sorriso limpinho!'},
+   {steps:true,items:HYG_STEPS.dentes,order:shuffle([0,1,2,3]),next:0,prompt:'Como a gente escova os dentes? Toque nas figuras na ordem. Comece pelo que vem primeiro.',
+    text:'Toque na ordem certa.',praise:'Agora você sabe escovar os dentes!'}];},
+ maos(){const ph=(from,t)=>[{tool:['🧼','sabão'],from,to:'foam',say:t},{tool:['🚰','torneira'],from:'foam',to:'drop',say:'Agora enxágue na água da torneira.'},{tool:['🧻','papel'],from:'drop',to:null,say:'Agora seque as mãos com o papel.'}];
+   return[
+   {steps:true,items:HYG_STEPS.maos,order:shuffle([0,1,2,3,4]),next:0,prompt:'Como a gente lava as mãos? Toque nas figuras na ordem. Comece pelo que vem primeiro.',
+    text:'Toque na ordem certa.',praise:'Agora você sabe lavar as mãos!'},
+   {clean:true,e:'🤲',spots:[[.2,.5],[.3,.78],[.13,.68],[.72,.5],[.8,.76],[.62,.68]],sz:.16,phases:ph('mud','Passe sabão e esfregue a sujeira das mãos.'),text:'Esfregue com o dedo.',praise:'Mãos limpinhas!'},
+   {clean:true,e:'🖐️',spots:[[.42,.66],[.58,.8],[.3,.33],[.47,.24],[.63,.31],[.84,.6]],sz:.15,phases:ph('germ','Os bichinhos se escondem entre os dedos. Esfregue bem com sabão!'),text:'Esfregue com o dedo.',praise:'Tchau, bichinhos! Mãos limpas!'}];},
+ puzzle(u){const z=PUZ.find(x=>x.id===u.id),L=z.kind==='letter';return shuffle(z.items).slice(0,3).map(it=>({puzzle:true,grid:z.grid,kind:z.kind,item:it,
+   order:shuffle([...Array(z.grid[0]*z.grid[1]).keys()]),
+   prompt:L?`Monte o quebra-cabeça da letra ${N(it)}. Arraste cada peça para o lugar certo.`:`Monte o quebra-cabeça ${it[2]==='a'?'da':'do'} ${it[1]}. Arraste cada peça para o lugar certo.`,
+   text:'Arraste as peças para o lugar certo.',
+   praise:L?`Você montou a letra ${N(it)}! ${cap(N(it))}, de ${concrete(it)[0][0]}.`:`Você montou ${it[2]} ${it[1]}!`,errLetter:L?it:null}));},
  lerFrase(u){const it=u.items;return shuffle(it).map(([F,e])=>{
    const opts=shuffle([[F,e],...shuffle(it.filter(x=>x[0]!==F)).slice(0,2)]).map(x=>({kind:'pic',value:x[1],pair:true,aria:'Figura',id:x[0]}));
    return{prompt:'Leia a frase e toque na figura certa.',text:'Leia a frase e toque na figura.',show:{kind:'sentence',value:F},options:opts,answer:opts.findIndex(o=>o.id===F),
@@ -961,7 +1378,7 @@ function scrStage(){
    ${groups.map(g=>`<h2 class="sec">${g}</h2><div class="units">${s.units.filter(u=>u.group===g).map(u=>{const all=unitDone(p,u);
      return `<button class="ut${all?' done':''}${u.key===recU?' rec':''}" data-action="unit" data-id="${u.key}" style="--ct:var(--t-${s.id})" aria-label="${esc(u.caption)}">
        ${u.key===recU?`<span class="flag">${ICON.star} Próxima</span>`:''}
-       <span class="ut-big">${u.html?u.big:esc(u.big)}</span>${s.id==='ler'||s.id==='silabas'||s.id==='pensar'?`<span class="ut-cap">${esc(u.caption)}</span>`:''}
+       <span class="ut-big">${u.html?u.big:esc(u.big)}</span>${s.id==='ler'||s.id==='silabas'||s.id==='pensar'||s.id==='cuidar'||s.id==='quebra'||s.id==='cantar'?`<span class="ut-cap">${esc(u.caption)}</span>`:''}
        <span class="dots">${u.acts.map(a=>`<i class="${isDone(p,a.key)?'on':''}"></i>`).join('')}</span>
        ${all?`<span class="badge-ok">${ICON.check}</span>`:''}</button>`;}).join('')}</div>`).join('')}
   </div>`;
@@ -990,13 +1407,13 @@ function startAct(key){
   hush();G={a,rounds:GEN[a.type](a.unit),i:0,errors:0,roundErr:0,token:0,t0:Date.now(),busy:false};
   S={...S,screen:'game',lastAct:key};startRound();
 }
-function startRound(){G.token=++TOK;G.roundErr=0;G.busy=false;const r=G.rounds[G.i];
-  if(r.build)renderBuild(r);else if(r.trace)renderTrace(r);else if(r.order)renderOrder(r);else if(r.mem)renderMemory(r);else if(r.drag)renderShadow(r);else if(r.bubbles)renderBubbles(r);else if(r.drive)renderDrive(r);else if(r.lanes)renderLanes(r);else if(r.body)renderBody(r);else renderPick(r);
+function startRound(){G.token=++TOK;Music.stop();G.roundErr=0;G.busy=false;const r=G.rounds[G.i];
+  if(r.build)renderBuild(r);else if(r.trace)renderTrace(r);else if(r.clean)renderClean(r);else if(r.steps)renderSteps(r);else if(r.puzzle)renderPuzzle(r);else if(r.order)renderOrder(r);else if(r.mem)renderMemory(r);else if(r.drag)renderShadow(r);else if(r.bubbles)renderBubbles(r);else if(r.drive)renderDrive(r);else if(r.lanes)renderLanes(r);else if(r.body)renderBody(r);else if(r.freeze)renderFreeze(r);else if(r.cant)renderCantiga(r);else renderPick(r);
   window.scrollTo(0,0);S.narr=r.prompt;say(r.prompt);}
 function nextRound(){G.i++;if(G.i>=G.rounds.length)finish();else startRound();}
-function finish(){const a=G.a,stars=G.errors===0?3:G.errors<=2?2:1;addTime(Date.now()-G.t0);const nst=record(a,stars,G.errors);
+function finish(){Music.stop();const a=G.a,stars=G.errors===0?3:G.errors<=2?2:1;addTime(Date.now()-G.t0);const nst=record(a,stars,G.errors);
   G.token++;G=null;sfx('win');S.end={key:a.key,stars,nst};go('end');}
-function exitGame(){if(!G)return;const u=G.a.unit;addTime(Date.now()-G.t0);hush();G.token++;G=null;go('unit',{unit:u.key});}
+function exitGame(){if(!G)return;Music.stop();const u=G.a.unit;addTime(Date.now()-G.t0);hush();G.token++;G=null;go('unit',{unit:u.key});}
 function gbar(){return `<div class="gbar"><button class="hold" data-hold="exit" aria-label="Sair: segure o botão">${ICON.home}</button>
   <div class="rdots" role="img" aria-label="Rodada ${G.i+1} de ${G.rounds.length}">${G.rounds.map((_,j)=>`<i class="${j<G.i?'on':j===G.i?'cur':''}"></i>`).join('')}</div>
   <button class="ibtn big" data-action="repeat" aria-label="Ouvir de novo">${ICON.spk}</button></div>`;}
@@ -1319,26 +1736,212 @@ function renderTrain(r){
   sfx('piui');
 }
 function trainGo(){const t=$('.train');if(!t)return;sfx('piui');t.classList.add('go');}
-/* Mexa o corpo: pausa longe da tela, com contagem em voz alta */
+/* Mexa o corpo: cada movimento tem uma animação, um tempo ajustável (Área dos pais) e uma música */
+const mcount=()=>'<div class="mcount"><svg class="mring" viewBox="0 0 40 40" aria-hidden="true"><circle class="bg" cx="20" cy="20" r="16"/><circle class="fg" cx="20" cy="20" r="16" pathLength="100"/></svg><b class="mnum"></b></div>';
 function renderBody(r){
-  const fig=r.syls?`<span class="emo bfig sm">${r.e}</span><div class="claps">${r.syls.map(s=>`<span>${esc(s)}</span>`).join('')}</div>`
-    :r.letter?`<span class="bglyph">${esc(r.e)}</span>`:`<span class="emo bfig">${r.e}</span>`;
+  const anim=r.L?'letter':r.syls?'clap':r.anim;let inner='';
+  if(anim==='letter')inner=`<div class="ldraw"><svg viewBox="0 0 100 100" width="100" height="100" aria-hidden="true"><path class="lguide" d="${r.path}"/><path class="lpen" d="${r.path}" pathLength="100"/></svg>${r.fig==='☝️'?`<span class="lfinger emo" style="offset-path:path('${r.path}')">☝️</span>`:''}</div>${r.fig!=='☝️'?`<div class="mbox"><span class="mfig emo">${r.fig}</span></div>`:''}`;
+  else if(anim==='fly')inner=`<div class="fpath"><span class="mfig emo">${r.e}</span></div>`;
+  else if(anim==='clap')inner=`<span class="mrip"></span><div class="mbox"><span class="mfig emo">👏</span></div>`;
+  else inner=`${anim==='breathe'?'<span class="mbreath"></span>':''}<div class="mshadow"></div><span class="mpuff p1"></span><span class="mpuff p2"></span><div class="mbox"><span class="mfig emo">${r.e}</span></div>`;
   app.innerHTML=`<div class="game" style="--ct:var(--t-pensar)">${gbar()}${talkHead(r.text)}
-   <div class="bodycard">${fig}<div class="btimer"${r.count?' hidden':''}><i></i></div></div>
+   ${r.syls?`<div class="clapw"><span class="emo cpic">${r.e}</span><div class="claps">${r.syls.map(s=>`<span>${esc(s)}</span>`).join('')}</div></div>`:''}
+   <div class="mstage m-${anim}${r.left?' fig-left':''}"><i class="cl c1"></i><i class="cl c2"></i>${anim==='fly'||anim==='letter'||anim==='clap'?'':'<div class="mground"></div>'}${inner}${mcount()}</div>
    <div class="bdone"><button class="cta" data-action="fiz" hidden>${ICON.check}<span>Pronto!</span></button></div></div>`;
   runBody(r);
 }
+function mScale(){const st=$('.mstage');if(!st)return;const k=Math.min(st.clientWidth,st.clientHeight)*.74/100;$$('.ldraw,.fpath').forEach(el=>el.style.transform=`translate(-50%,-50%) scale(${k})`);}
+const mWaitTalk=async live=>{const w=ms=>new Promise(res=>setTimeout(res,ms));await w(400);const t0=Date.now();while(live()&&talking&&Date.now()-t0<15000)await w(150);};
 async function runBody(r){
-  const tok=G.token,live=()=>G&&G.token===tok,wait=ms=>new Promise(res=>setTimeout(res,ms));
-  await wait(400);const t0=Date.now();while(live()&&talking&&Date.now()-t0<15000)await wait(150);if(!live())return;
-  if(r.count){const marks=$$('.claps span'),card=$('.bodycard');
-    for(let k=0;k<r.count.length;k++){if(!live())return;if(marks[k])marks[k].classList.add('on');sfx(r.syls?'clap':'tap');card.classList.add('beat');
-      await say(r.count[k]);if(!live())return;card.classList.remove('beat');await wait(r.syls?350:700);}
-  }else{const bar=$('.btimer i');bar.style.transition=`width ${r.secs}s linear`;setTimeout(()=>{bar.style.width='100%';},30);await wait(r.secs*1000+60);}
-  if(!live())return;const b=$('[data-action="fiz"]');if(b)b.hidden=false;say('Quando terminar, toque no botão verde.');
+  const tok=G.token,live=()=>G&&G.token===tok,wait=ms=>new Promise(res=>setTimeout(res,ms)),D=bodyDur();
+  const st=$('.mstage'),num=$('.mnum'),fg=$('.mring .fg');mScale();
+  const retrig=el=>{if(!el)return;el.classList.remove('beat');void el.offsetWidth;el.classList.add('beat');};
+  const beat=()=>{retrig($('.mfig'));retrig($('.mshadow'));$$('.mpuff').forEach(retrig);retrig($('.mrip'));if(r.anim==='stomp'){st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');}};
+  const ring=(f,secs)=>{fg.style.transition=secs?`stroke-dashoffset ${secs}s linear`:'stroke-dashoffset .3s';fg.style.strokeDashoffset=String(100-100*f);};
+  const pop=v=>{num.textContent=v;num.classList.remove('pop');void num.offsetWidth;num.classList.add('pop');};
+  const song=r.syls?null:r.L?'danca':r.song;if(song)Music.play(song);
+  await mWaitTalk(live);if(!live())return;
+  st.classList.add('run');
+  if(r.syls){const reps=D.reps<=5?2:D.reps<=10?3:4,marks=$$('.claps span');
+    for(let n=0;n<reps;n++){if(!live())return;
+      if(n>0){marks.forEach(m=>m.classList.remove('on'));await say(n===reps-1?'Mais uma vez!':'De novo!');if(!live())return;await wait(300);}
+      for(let i=0;i<r.syls.length;i++){if(!live())return;marks[i].classList.add('on');beat();sfx('clap');pop(n+1);await say(sp(r.syls[i])+'!');if(!live())return;await wait(350);}
+      ring((n+1)/reps);await wait(500);}
+  }else if(r.count){const reps=D.reps;
+    for(let i=1;i<=reps;i++){if(!live())return;beat();pop(i);ring(i/reps);if(r.anim!=='stomp')sfx('tap');
+      await say(r.word||cap(NUMS[i-1])+'!');if(!live())return;await wait(r.anim==='stomp'?300:450);
+      if(reps>=8&&i===Math.floor(reps/2)){await say(rnd(['Isso! Continue!','Muito bem! Falta pouco!']));if(!live())return;}}
+  }else{const secs=D.secs;let ci=0;ring(1);await wait(40);ring(0,secs);
+    for(let s=secs;s>0;s--){if(!live())return;num.textContent=s;const el=secs-s;
+      if(s<=3)say(cap(NUMS[s-1])+'!');
+      else if(el>0&&r.cues&&el%(r.cueEvery||5)===0)say(r.cues[ci++%r.cues.length]);
+      else if(!r.cues&&s===Math.ceil(secs/2))say(rnd(['Isso! Continue!','Muito bem! Falta pouco!']));
+      await wait(1000);}
+  }
+  if(!live())return;st.classList.remove('run');
+  const b=$('[data-action="fiz"]');if(b)b.hidden=false;say('Muito bem! Quando terminar, toque no botão verde.');
 }
-async function onFiz(){if(!G||G.busy)return;const r=G.rounds[G.i],tok=G.token;if(!r.body)return;G.busy=true;sfx('ok');burst($('.bodycard'));
+async function onFiz(){if(!G||G.busy)return;const r=G.rounds[G.i],tok=G.token;if(!r.body&&!r.cant)return;G.busy=true;sfx('ok');burst($('.mstage'));
   await say(`${rnd(PRAISE)} ${r.praise}`);if(!G||tok!==G.token)return;nextRound();}
+/* Dança da estátua: dança enquanto a música toca; quando ela para, vira estátua */
+function renderFreeze(r){
+  app.innerHTML=`<div class="game" style="--ct:var(--t-pensar)">${gbar()}${talkHead(r.text)}
+   <div class="mstage m-dance"><i class="cl c1"></i><i class="cl c2"></i><div class="mground"></div><div class="mshadow"></div>
+    <span class="mnote n1">♪</span><span class="mnote n2">♫</span><span class="mnote n3">♪</span>
+    <div class="mbox"><span class="mfig emo">${r.fig}</span></div><div class="mice"></div><span class="mstop">Estátua!</span>${mcount()}</div>
+   <div class="bdone"></div></div>`;
+  runFreeze(r);
+}
+async function runFreeze(r){
+  const tok=G.token,live=()=>G&&G.token===tok,wait=ms=>new Promise(res=>setTimeout(res,ms)),D=bodyDur(),st=$('.mstage'),num=$('.mnum'),fg=$('.mring .fg');
+  await mWaitTalk(live);if(!live())return;
+  for(let n=0;n<r.stops;n++){if(!live())return;num.textContent=n+1;
+    st.classList.remove('frozen');st.classList.add('run');Music.play(r.song);if(n>0)say(rnd(['Pode dançar!','Dança, dança!','Mexe de novo!']));
+    await wait((D.secs*.35+Math.random()*D.secs*.3)*1000);if(!live())return;
+    Music.stop();st.classList.remove('run');st.classList.add('frozen');sfx('freeze');say('Estátua!');
+    fg.style.strokeDashoffset=String(100-100*(n+1)/r.stops);
+    await wait(D.secs>=30?5000:4000);if(!live())return;}
+  st.classList.remove('frozen');G.busy=true;sfx('ok');burst(st);await say(`${rnd(PRAISE)} ${r.praise}`);if(!live())return;nextRound();
+}
+
+/* Cantar e Dançar: a cantiga toca, a letra acende sílaba por sílaba e cada verso mostra um passo de dança */
+function renderCantiga(r){const c=r.c;
+  app.innerHTML=`<div class="game cant" style="--ct:var(--t-cantar)">${gbar()}${talkHead(r.text)}
+   <div class="mstage m-roda" style="--bt:${(60/c.bpm).toFixed(3)}s"><i class="cl c1"></i><i class="cl c2"></i><div class="mground"></div><div class="mshadow"></div>
+    <span class="mnote n1">♪</span><span class="mnote n2">♫</span><span class="mnote n3">♪</span><span class="mrip"></span>
+    <div class="mvchip"><span class="emo mvico">🎶</span><b class="mvlab">Prepare-se!</b></div>
+    <div class="mbox"><span class="mfig emo">${c.fig}</span></div>${mcount()}</div>
+   <div class="lyr"><p class="lyr-now">${esc(c.name)}</p><p class="lyr-next"></p></div>
+   <div class="bdone" hidden><button class="btn2" data-action="cantAgain">${ICON.again}<span>De novo</span></button><button class="cta" data-action="fiz">${ICON.check}<span>Pronto!</span></button></div></div>`;
+  runCantiga(r);
+}
+async function runCantiga(r){
+  const tok=G.token,live=()=>G&&G.token===tok,c=r.c,sq=compileCant(c,cantReps(c));
+  const st=$('.mstage'),num=$('.mnum'),fg=$('.mring .fg'),now=$('.lyr-now'),nx=$('.lyr-next'),chip=$('.mvchip');
+  const retrig=el=>{if(!el)return;el.classList.remove('beat');void el.offsetWidth;el.classList.add('beat');};
+  const lineHtml=L=>{let h='<b class="lw">',w=0;L.syl.forEach((s,i)=>{if(s.w!==w){h+='</b> <b class="lw">';w=s.w;}h+=`<span data-i="${i}">${esc(s.s)}</span>`;});return h+'</b>';};
+  const setMove=mv=>{if(st.dataset.mv===mv)return;if(st.dataset.mv)st.classList.remove('mv-'+st.dataset.mv);st.classList.add('mv-'+mv);st.dataset.mv=mv;
+    const[e,l]=DMOVES[mv];chip.innerHTML=`<span class="emo mvico">${e}</span><b class="mvlab">${esc(l)}</b>`;chip.classList.remove('pop');void chip.offsetWidth;chip.classList.add('pop');};
+  num.textContent='';fg.style.transition='stroke-dashoffset .3s';
+  await mWaitTalk(live);if(!live())return;
+  st.classList.add('run');now.textContent='Prepare-se...';
+  let curL=null;
+  const ok=Music.seq(sq,(type,x)=>{if(!live())return;
+    if(type==='line'){curL=x;now.innerHTML=lineHtml(x);const n=sq.lines[x.idx+1];nx.innerHTML=n&&n.rep===x.rep?lineHtml(n):'';setMove(x.mv);
+      if(x.idx===0||sq.lines[x.idx-1].rep!==x.rep){num.textContent=(x.rep+1)+'ª';num.classList.remove('pop');void num.offsetWidth;num.classList.add('pop');}}
+    else if(type==='syl'){if(!curL||x.line!==curL.idx)return;const els=$$('.lyr-now [data-i]');els.forEach((s,i)=>{s.classList.toggle('done',i<x.si);s.classList.toggle('on',i===x.si);});}
+    else if(type==='beat'){fg.style.strokeDashoffset=String(100-100*x/sq.total);
+      if(x<8){now.textContent=['Um...','Dois...','Três...','Já!'][x/2];return;}
+      const mv=st.dataset.mv,q=x/2;
+      if(curL&&x>=curL.t1)$$('.lyr-now [data-i]').forEach(s=>{s.classList.remove('on');s.classList.add('done');});
+      if(DBEAT.includes(mv)&&(mv!=='pula'||q%2===0)){retrig($('.mfig'));retrig($('.mshadow'));if(mv==='palma')retrig($('.mrip'));}}
+    else if(type==='end')endSong();});
+  if(!ok){now.textContent='Não consegui tocar a música neste aparelho.';endSong();}
+  function endSong(){if(!live())return;st.classList.remove('run');fg.style.strokeDashoffset='0';
+    chip.innerHTML='<span class="emo mvico">⭐</span><b class="mvlab">Muito bem!</b>';
+    const b=$('.cant .bdone');if(b)b.hidden=false;say('Que dança bonita! Toque em De novo para cantar outra vez, ou no botão verde para terminar.');}
+}
+
+/* ================= Cuidar de Mim e Quebra-cabeças: telas ================= */
+/* Esfregar para limpar: cada fase tem uma ferramenta (esponja, chuveiro, escova...) e transforma a sujeira */
+function renderClean(r){const p=r.phases[0];r.ph=0;r.prompt=p.say;
+  app.innerHTML=`<div class="game" style="--ct:var(--t-cuidar)">${gbar()}${talkHead(p.say)}
+   <div class="cwrap"><div class="scene"><span class="hfig emo">${r.e}</span>${r.spots.map((_,i)=>`<span class="spot" data-s="${i}"></span>`).join('')}<span class="tool" hidden><span class="emo">${p.tool[0]}</span></span></div></div>
+   <div class="dock"><button class="dtool" data-action="toolHear" aria-label="${esc(p.tool[1])}"><span class="emo">${p.tool[0]}</span></button></div></div>`;
+  setupClean(r);
+}
+function setupClean(r){
+  const tok=G.token,sc=$('.scene'),wrap=$('.cwrap');
+  const S=Math.floor(Math.min(wrap.clientWidth,420,Math.max(220,window.innerHeight-$('.game .ask').getBoundingClientRect().bottom-136)));
+  sc.style.width=sc.style.height=S+'px';$('.hfig').style.fontSize=Math.round(S*.72)+'px';
+  const els=$$('.spot'),d=Math.round(S*(r.sz||.17)),tool=$('.tool');tool.style.fontSize=Math.round(S*.2)+'px';
+  const setType=(h,t)=>{h.type=t;h.hp=100;h.el.className='spot '+(t||'gone');h.el.style.opacity='';
+    h.el.innerHTML=t==='germ'?'<span class="emo">🦠</span>':t==='drop'?'<span class="emo">💧</span>':'';};
+  const H=r.spots.map(([x,y],i)=>({x:(.07+.86*x)*S,y:(.07+.86*y)*S,el:els[i]}));
+  H.forEach(h=>{h.el.style.cssText=`left:${h.x}px;top:${h.y}px;width:${d}px;height:${d}px;font-size:${Math.round(d*.7)}px`;setType(h,r.phases[0].from);});
+  let down=false,last=null,lastSnd=0;G.clean={H,S,d};
+  const pt=e=>{const b=sc.getBoundingClientRect();return[(e.clientX-b.left)*S/b.width,(e.clientY-b.top)*S/b.height];};
+  const showTool=p=>{tool.hidden=false;tool.style.left=p[0]+'px';tool.style.top=p[1]+'px';};
+  sc.onpointerdown=e=>{if(!G||G.token!==tok||G.busy)return;e.preventDefault();try{sc.setPointerCapture(e.pointerId);}catch(_){}down=true;last=pt(e);showTool(last);};
+  sc.onpointermove=e=>{if(!down||!G||G.token!==tok||G.busy)return;const p=pt(e),mv=Math.hypot(p[0]-last[0],p[1]-last[1]);last=p;showTool(p);if(mv<.5)return;
+    const ph=r.phases[r.ph];let hit=false;
+    for(const h of H){if(h.type!==ph.from||Math.hypot(p[0]-h.x,p[1]-h.y)>d*.8)continue;hit=true;
+      h.hp-=mv/S*330;h.el.style.opacity=String(.3+.7*Math.max(0,h.hp)/100);
+      if(h.hp<=0){setType(h,ph.to);if(ph.to)h.el.classList.add('pop');sfx('tap');}}
+    const now=performance.now();if(hit&&now-lastSnd>140){lastSnd=now;sfx('scrub');}
+    if(!H.some(h=>h.type===ph.from))phaseDone();};
+  sc.onpointerup=sc.onpointercancel=()=>{down=false;tool.hidden=true;};
+  async function phaseDone(){
+    down=false;tool.hidden=true;
+    if(r.ph+1<r.phases.length){r.ph++;const p=r.phases[r.ph];r.prompt=p.say;
+      tool.innerHTML=`<span class="emo">${p.tool[0]}</span>`;const dt=$('.dtool');dt.innerHTML=`<span class="emo">${p.tool[0]}</span>`;dt.setAttribute('aria-label',p.tool[1]);
+      $('.ask-text').textContent=p.say;sfx('ok');say(p.say);}
+    else{G.busy=true;sc.classList.add('shine');sfx('ok');burst(sc);await say(`${rnd(PRAISE)} ${r.praise}`);if(!G||tok!==G.token)return;nextRound();}
+  }
+}
+/* Colocar os passos na ordem (lavar as mãos, escovar os dentes) */
+function renderSteps(r){const n=r.items.length;
+  app.innerHTML=`<div class="game" style="--ct:var(--t-cuidar)">${gbar()}${talkHead(r.text)}
+   <div class="stline">${r.items.map((_,i)=>`<span class="stslot"><i>${i+1}</i></span>`).join('')}</div>
+   <div class="answers" style="--n:${n>4?3:n}">${r.order.map((k,i)=>`<div class="optw"><div class="opt" role="button" tabindex="0" data-action="step" data-i="${i}" aria-label="${esc(r.items[k][1])}"><span class="emo">${r.items[k][0]}</span></div>
+     <button class="mini" data-action="stepHear" data-i="${i}" aria-label="Ouvir: ${esc(r.items[k][1])}">${ICON.spk}</button></div>`).join('')}</div></div>`;
+}
+async function onStep(i){
+  if(!G||G.busy)return;const r=G.rounds[G.i];if(!r.steps)return;const els=$$('.opt'),el=els[i],k=r.order[i],tok=G.token;if(!el||el.classList.contains('used'))return;
+  if(k===r.next){el.classList.add('used');els.forEach(x=>x.classList.remove('hint'));const sl=$$('.stslot')[k];sl.innerHTML=`<span class="emo">${r.items[k][0]}</span>`;sl.classList.add('full');r.next++;G.roundErr=0;
+    const w=k===0?'Primeiro':k===r.items.length-1?'Por último':'Depois';
+    if(r.next>=r.items.length){G.busy=true;sfx('ok');burst($('.stline'));await say(`${w}, ${r.items[k][1]}. ${rnd(PRAISE)} ${r.praise}`);if(!G||tok!==G.token)return;nextRound();}
+    else{sfx('tap');say(`${w}, ${r.items[k][1]}.`);}
+  }else{G.errors++;G.roundErr++;sfx('no');el.classList.add('wrong');setTimeout(()=>el.classList.remove('wrong'),450);
+    say(`${cap(r.items[k][1])} vem depois. ${r.next===0?'O que vem primeiro?':'E agora, o que vem?'}`);
+    if(G.roundErr>=2){const hi=r.order.indexOf(r.next);if(hi>=0)els[hi].classList.add('hint');}}
+}
+/* Quebra-cabeças: arrastar a peça até o lugar (ou tocar na peça e depois no lugar) */
+const PZ_SC={4:.5,6:.56,9:.58};
+function pzFig(r,S){return r.kind==='letter'?`<span class="pzl" style="font-size:${Math.round(S*1.05)}px">${esc(r.item)}</span>`
+  :`<span class="emo pzf" style="width:${Math.round(S*.86)}px;height:${Math.round(S*.86)}px;font-size:${Math.round(S*.72)}px">${r.item[0]}</span>`;}
+function renderPuzzle(r){app.innerHTML=`<div class="game" style="--ct:var(--t-quebra)">${gbar()}${talkHead(r.text)}<div class="pz"></div></div>`;setupPuzzle(r);}
+function setupPuzzle(r){
+  const tok=G.token,pz=$('.pz'),[C,R]=r.grid,n=C*R,W=pz.clientWidth,gap=8,sc=PZ_SC[n];
+  const avail=window.innerHeight-$('.game .ask').getBoundingClientRect().bottom-26;
+  let S=Math.min(W,380),cw,ch,k,trayH;
+  for(;;S-=8){cw=S/C;ch=S/R;k=Math.max(1,Math.floor((W+gap)/(cw*sc+gap)));trayH=Math.ceil(n/k)*(ch*sc+gap);if(S+12+trayH<=avail||S<=200)break;}
+  pz.style.height=Math.ceil(S+12+trayH)+'px';const bx=(W-S)/2;
+  pz.innerHTML=`<div class="pzb" style="left:${bx}px;width:${S}px;height:${S}px"><div class="pzi pzg" style="left:0;top:0;width:${S}px;height:${S}px">${pzFig(r,S)}</div>`+
+    [...Array(n).keys()].map(i=>`<div class="pzc" data-c="${i}" style="left:${i%C*cw}px;top:${Math.floor(i/C)*ch}px;width:${cw}px;height:${ch}px"></div>`).join('')+'</div>'+
+    r.order.map((i,j)=>`<div class="pzp" data-p="${i}" role="button" tabindex="0" aria-label="Peça ${j+1}" style="width:${cw}px;height:${ch}px"><div class="pzi" style="left:${-(i%C)*cw}px;top:${-Math.floor(i/C)*ch}px;width:${S}px;height:${S}px">${pzFig(r,S)}</div></div>`).join('');
+  const P=r.order.map((i,j)=>({i,j,el:pz.querySelector(`.pzp[data-p="${i}"]`),placed:false}));
+  const rowW=Math.min(k,n)*(cw*sc+gap)-gap,x0=(W-rowW)/2;
+  const home=p=>{p.el.style.left=(x0+(p.j%k)*(cw*sc+gap))+'px';p.el.style.top=(S+12+Math.floor(p.j/k)*(ch*sc+gap))+'px';p.el.style.transform=`scale(${sc})`;};
+  P.forEach(home);
+  let sel=null,drag=null;r.left=n;
+  const select=p=>{sel=p;P.forEach(q=>q.el.classList.toggle('sel',q===p));if(p){sfx('tap');say('Agora toque no lugar dessa peça.');}};
+  async function drop(p,cell){
+    sel=null;P.forEach(q=>q.el.classList.remove('sel'));
+    if(cell<0||P.some(q=>q.placed&&q.i===cell)){home(p);return;}
+    if(cell===p.i){p.placed=true;p.el.style.left=(bx+(cell%C)*cw)+'px';p.el.style.top=(Math.floor(cell/C)*ch)+'px';p.el.style.transform='none';p.el.classList.add('placed');
+      $$('.pzc').forEach(c=>c.classList.remove('hint'));sfx('tap');r.left--;G.roundErr=0;
+      if(r.left<=0){G.busy=true;$('.pzb').classList.add('done');sfx('ok');burst($('.pzb'));await say(`${rnd(PRAISE)} ${r.praise}`);if(!G||tok!==G.token)return;nextRound();}}
+    else{G.errors++;G.roundErr++;if(r.errLetter)bumpErr(r.errLetter);sfx('no');const c=$$('.pzc')[cell];c.classList.add('wrong');setTimeout(()=>c.classList.remove('wrong'),450);home(p);
+      say('Essa peça não é daí. Olhe o desenho clarinho e tente outro lugar.');
+      if(G.roundErr>=2)$$('.pzc')[p.i].classList.add('hint');}
+  }
+  const local=e=>{const b=pz.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top];};
+  P.forEach(p=>{const el=p.el;
+    el.onpointerdown=e=>{if(!G||G.token!==tok||G.busy||p.placed)return;e.preventDefault();try{el.setPointerCapture(e.pointerId);}catch(_){}
+      const rc=el.getBoundingClientRect();drag={p,fx:(e.clientX-rc.left)/rc.width,fy:(e.clientY-rc.top)/rc.height,sx:e.clientX,sy:e.clientY,moved:false};};
+    el.onpointermove=e=>{if(!drag||drag.p!==p)return;if(!drag.moved&&Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<8)return;
+      if(!drag.moved){drag.moved=true;el.classList.add('drag');el.style.transform='none';}
+      const[x,y]=local(e);el.style.left=(x-drag.fx*cw)+'px';el.style.top=(y-drag.fy*ch)+'px';};
+    el.onpointerup=el.onpointercancel=e=>{if(!drag||drag.p!==p)return;const d=drag;drag=null;el.classList.remove('drag');
+      if(!d.moved){if(e.type==='pointerup')select(sel===p?null:p);return;}
+      const[x,y]=local(e),cx=x-d.fx*cw+cw/2-bx,cy=y-d.fy*ch+ch/2;
+      drop(p,cx>=0&&cx<S&&cy>=0&&cy<S?Math.floor(cx/cw)+C*Math.floor(cy/ch):-1);};
+    el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p);}};
+  });
+  $$('.pzc').forEach(c=>{c.onclick=()=>{if(!G||G.token!==tok||G.busy)return;if(sel)drop(sel,+c.dataset.c);else say('Arraste uma peça até aqui.');};});
+  G.pz={P,drop,geo:{S,cw,ch,bx}};
+}
 
 /* ================= Fim, álbum, conquistas ================= */
 function scrEnd(){
@@ -1398,6 +2001,10 @@ function scrParents(){
    ${sel?childReport(sel):''}
    <section class="panel"><h2>Sons do jogo</h2>
     <label class="check"><input type="checkbox" id="sfx" data-change="sfx" ${DB.settings.sfx?'checked':''}> Tocar sons de acerto e erro</label></section>
+   <section class="panel"><h2>Movimento e música</h2>
+    <div class="field"><label for="bodydur">Tempo de cada movimento no "Mexa o corpo" e na "Dança da estátua" (nas cantigas, a música repete mais vezes quanto maior o tempo)</label><select id="bodydur" data-change="bodyDur">${[['curto','Curto (10 segundos)'],['medio','Médio (20 segundos)'],['longo','Longo (30 segundos)']].map(([v,t])=>`<option value="${v}"${(DB.settings.bodyDur||'medio')===v?' selected':''}>${t}</option>`).join('')}</select></div>
+    <label class="check"><input type="checkbox" id="music" data-change="music" ${DB.settings.music!==false?'checked':''}> Tocar músicas nos jogos de movimento (as cantigas sempre tocam)</label>
+    <p class="note">As músicas foram compostas para este app e são tocadas pelo próprio aparelho: não usam gravações de terceiros e funcionam sem internet.</p></section>
    <section class="panel"><h2>Onde o progresso fica salvo</h2>
     <p class="${['saved','saving'].includes(Sync.state)?'okline':Sync.state==='connecting'?'':'warn'}" id="sync-status" role="status">${Sync.label()}</p>
     <p class="note">${Sync.db?'Fica na sua conta Claude, numa área privada que só a sua conta lê. Ao abrir o app em outro celular, tablet ou computador com a mesma conta, as crianças e o progresso aparecem lá. Uma cópia também fica neste aparelho, para funcionar sem internet.'
@@ -1479,6 +2086,10 @@ const A={
  mem(el){onMem(+el.dataset.i);},
  ord(el){onOrd(+el.dataset.i);},
  fiz(){onFiz();},
+ cantAgain(){if(G&&G.rounds[G.i].cant&&!G.busy){hush();startRound();}},
+ step(el){onStep(+el.dataset.i);},
+ stepHear(el){const r=G&&G.rounds[G.i];if(r&&r.steps)say(r.items[r.order[+el.dataset.i]][1]);},
+ toolHear(){const r=G&&G.rounds[G.i];if(r&&r.clean){const p=r.phases[r.ph];say(`${cap(p.tool[1])}. ${p.say}`);}},
  erase(){if(G&&G.trace){G.trace.u.clearRect(0,0,G.trace.size,G.trace.size);G.trace.drawn=[];G.trace.warned=false;if(G.trace.place)G.trace.place(G.trace.place.start);say('Apagado. Tente de novo.');}},
  traceDone(){checkTrace(true);},
  parents(){S.back=S.screen==='home'?'home':'profiles';newGate();go('gate');},
@@ -1509,7 +2120,9 @@ const FORMS={
 const CHANGES={
  voice(el){DB.settings.voice=el.value;save();pickVoice();say('Esta é a voz do Lelo.');},
  rate(el){DB.settings.rate=parseFloat(el.value);save();render();say('Esta é a velocidade da fala.');},
- sfx(el){DB.settings.sfx=el.checked;save();if(el.checked){ensureAudio();sfx('ok');}}
+ sfx(el){DB.settings.sfx=el.checked;save();if(el.checked){ensureAudio();sfx('ok');}},
+ bodyDur(el){DB.settings.bodyDur=el.value;save();},
+ music(el){DB.settings.music=el.checked;save();if(el.checked){Music.play('danca');setTimeout(()=>Music.stop(),3000);}else Music.stop();}
 };
 app.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(!el||!app.contains(el))return;const fn=A[el.dataset.action];if(fn){e.preventDefault();fn(el,e);}});
 app.addEventListener('keydown',e=>{

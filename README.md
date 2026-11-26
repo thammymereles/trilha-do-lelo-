@@ -6,7 +6,7 @@ Funciona no navegador do celular, do tablet ou do computador. Não precisa insta
 
 ## O que tem no app
 
-A trilha tem 6 etapas e 174 brincadeiras:
+A trilha tem 9 etapas e 193 brincadeiras:
 
 | Etapa | O que a criança faz |
 |---|---|
@@ -15,9 +15,12 @@ A trilha tem 6 etapas e 174 brincadeiras:
 | O Som das Letras | Ouve uma palavra e escolhe a letra do primeiro som |
 | Juntando os Sons | Ouve e toca na sílaba certa, monta palavras com sílabas |
 | Começando a Ler | Acha a palavra certa, lê a palavra e acha a figura, lê frases curtas |
-| Pensar e Mexer | Lógica: o que vem depois na fila, qual figura é diferente, do menor ao maior, jogo da memória. Coordenação motora: passar o dedo em caminhos (reta, onda, zigue-zague), arrastar figuras até a sombra, estourar bolhas. Mexa o corpo: pausas longe da tela (pular, equilibrar, fazer letras com o corpo, bater palmas nas sílabas). Carros e trens: dirigir o carro até a garagem certa, corrida pegando estrelas e letras, trem das sílabas |
+| Pensar e Mexer | Lógica: o que vem depois na fila, qual figura é diferente, do menor ao maior, jogo da memória. Coordenação motora: passar o dedo em caminhos (reta, onda, zigue-zague), arrastar figuras até a sombra, estourar bolhas. Mexa o corpo: pausas longe da tela, com animação de cada movimento e música (pular, equilibrar, voar como avião, desenhar letras no ar, bater palmas nas sílabas). Dança da estátua: dançar enquanto a música toca e virar estátua quando ela para. Carros e trens: dirigir o carro até a garagem certa, corrida pegando estrelas e letras, trem das sílabas |
+| Cuidar de Mim | Higiene: dar banho nos bichinhos, escovar os dentes e lavar as mãos esfregando a sujeira com o dedo (esponja, chuveiro, escova, sabão, torneira, papel), e colocar na ordem os passos de escovar os dentes e de lavar as mãos |
+| Quebra-cabeças | Arrastar peças (ou tocar na peça e depois no lugar) para montar letras (4 e 6 peças) e figuras (4, 6 e 9 peças) |
+| Cantar e Dançar | 10 cantigas de roda para cantar e mexer o corpo: Ciranda, cirandinha; Marcha soldado; Escravos de Jó; Peixe vivo; Borboletinha; O sapo não lava o pé; Samba lelê; A canoa virou; Pirulito que bate bate; Fui no Itororó. A letra acende sílaba por sílaba junto com a melodia, e cada verso mostra um passo de dança animado (rodar, marchar, nadar, voar, bater palmas, bater o pé...) |
 
-Os jogos de Pensar e Mexer entram na trilha recomendada um a cada 2 letras, para variar o ritmo.
+Os jogos de Pensar e Mexer entram na trilha recomendada um a cada 2 letras, e os de Cuidar de Mim, os Quebra-cabeças e as cantigas um a cada 3 letras, para variar o ritmo.
 
 Feito para quem ainda não lê:
 
@@ -37,7 +40,8 @@ Feito para quem ainda não lê:
 - tempo de uso por dia;
 - letras com mais erros;
 - últimas brincadeiras;
-- escolha da voz e da velocidade da fala.
+- escolha da voz e da velocidade da fala;
+- tempo de cada movimento no "Mexa o corpo" (10, 20 ou 30 segundos), que também decide quantas vezes cada cantiga repete, e música ligada ou desligada nos jogos de movimento (as cantigas sempre tocam).
 
 ## Como publicar no GitHub Pages (grátis)
 
@@ -68,6 +72,12 @@ O app usa as fontes Andika e Fredoka do Google Fonts, então o navegador baixa a
 
 As figuras 3D são as [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) da Microsoft (licença MIT), baixadas do jsDelivr na primeira vez que aparecem. Se o aparelho estiver sem internet, aparece no lugar o emoji do próprio aparelho.
 
+## Músicas
+
+As 4 músicas dos jogos de movimento ("Pula Pula", "Dança do Lelo", "Devagarinho" e "Marcha da Bicharada") foram compostas para este app e são tocadas pelo próprio navegador, sem arquivos de áudio. Não usam gravações nem melodias de terceiros e funcionam sem internet. As notas ficam em `SONGS`, no `index.html`.
+
+As cantigas da etapa Cantar e Dançar são tradicionais do folclore brasileiro, de autor desconhecido e em domínio público. O app usa só a melodia e a letra tradicionais, com acompanhamento próprio tocado pelo navegador; não usa nenhuma gravação ou arranjo de terceiros. As notas foram conferidas com as cifras para flauta doce do site Cifra Visual (cifravisual.com.br). No "Samba lelê" o app usa só o refrão.
+
 ## Voz
 
 A narração usa a voz que já vem no aparelho (síntese de voz do navegador):
@@ -88,5 +98,7 @@ Está tudo num arquivo só, o `index.html`. O conteúdo fica no começo do `<scr
 - `ORDER`: a ordem em que a trilha recomenda as letras.
 - `CATS`, `SEQ_POOL`, `SHADOW_POOL` e `PATHS`: as figuras dos jogos de Pensar e Mexer (grupos do "qual é diferente", figuras das filas e das sombras, e os caminhos).
 - `GARAGE_PICS`, `BODY` e `BODY_LETTERS`: os bichos das garagens e os movimentos do "Mexa o corpo".
+- `CANT` e `DMOVES`: as cantigas (notas em solfejo, letra separada em sílabas e o passo de dança de cada verso) e os passos de dança.
+- `HYG_BATH`, `HYG_STEPS` e `PUZ`: os bichinhos do banho (com o lugar de cada sujeira), os passos de escovar os dentes e de lavar as mãos, e as letras e figuras dos quebra-cabeças.
 
 Para trocar uma figura, troque o emoji: o app mostra a versão 3D dele sozinho. Para trocar uma palavra, troque o texto. O resto do app se ajusta sozinho.

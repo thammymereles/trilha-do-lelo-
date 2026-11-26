@@ -923,7 +923,8 @@ const DB=load()||{settings:{rate:0.9,voice:'',sfx:true},profiles:[]};
 DB.profiles.forEach(p=>{p.done=p.done||{};p.log=p.log||[];p.err=p.err||{};p.time=p.time||{};});
 
 /* ================= Voz (narração em tudo) ================= */
-const Voice={list:[],v:null,ok:false,checked:false,supported:'speechSynthesis' in window,errs:[],spoke:''};
+const Voice={list:[],v:null,ok:false,checked:false,supported:'speechSynthesis' in window,errs:[],spoke:'',trace:[]};
+function vtrace(x){Voice.trace.push(x);if(Voice.trace.length>14)Voice.trace.shift();}
 function pickVoice(){
   if(!Voice.supported)return;
   const all=speechSynthesis.getVoices()||[];
@@ -944,7 +945,7 @@ function setTalking(on){talking=on;if(window.Music)Music.duck(on);$$('.lelo').fo
 function say(text,opts={}){
   return new Promise(res=>{
     const id=++speakId;
-    const done=()=>{if(id===speakId)setTalking(false);res();};
+    const done=()=>{if(id===speakId){setTalking(false);audioAfterSpeech();}res();};
     if(!text){res();return;}
     setTalking(true);
     if(!Voice.supported){setTimeout(done,Math.min(2600,text.length*55));return;}
@@ -956,7 +957,8 @@ function say(text,opts={}){
     const cands=[Voice.v,alt.find(v=>/pt[-_]BR/i.test(v.lang))||alt[0]].filter(Boolean);cands.push(null);
     const go=()=>{
       if(fin)return;if(id!==speakId){end();return;}
-      const v=cands[ci];let started=false,dead=false;const t0=Date.now();
+      const v=cands[ci];let started=false,dead=false;const t0=Date.now(),ms=()=>((Date.now()-t0)/1000).toFixed(1)+'s';
+      vtrace((v?v.name.replace(/^(Microsoft|Google)\s*/,'').slice(0,22):'padrão')+':');
       const fail=(why,sameVoice)=>{if(fin||started||dead)return;dead=true;clearTimeout(t);Voice.errs.push(why);if(Voice.errs.length>6)Voice.errs.shift();
         if(id!==speakId){end();return;}
         if(sameVoice&&again<2)again++;else ci++;
@@ -967,30 +969,40 @@ function say(text,opts={}){
         const u=new SpeechSynthesisUtterance(text);
         u.lang=v?v.lang.replace('_','-'):'pt-BR';if(v)u.voice=v;
         u.rate=v?DB.settings.rate:Math.max(.85,DB.settings.rate);u.pitch=v?1.08:1;u.volume=1;
-        u.onstart=()=>{if(dead)return;started=true;Voice.spoke=v?v.name:'voz padrão';if(opts.onstart)opts.onstart(v);clearTimeout(t);t=setTimeout(end,2500+text.length*120/DB.settings.rate);};
-        u.onend=()=>{if(dead)return;if(!started&&Date.now()-t0<700)fail('terminou sem falar',false);else end();};
-        u.onerror=e=>{if(dead)return;const c=(e&&e.error)||'erro';if(started){end();return;}fail(c,c==='interrupted'||c==='canceled');};
+        u.onstart=()=>{if(dead)return;started=true;vtrace('começou '+ms());Voice.spoke=v?v.name:'voz padrão';if(opts.onstart)opts.onstart(v);clearTimeout(t);t=setTimeout(end,2500+text.length*120/DB.settings.rate);};
+        u.onend=()=>{if(dead)return;vtrace('fim '+ms());if(!started&&Date.now()-t0<Math.max(1500,text.length*45/DB.settings.rate))fail('terminou sem falar',false);else end();};
+        u.onerror=e=>{if(dead)return;const c=(e&&e.error)||'erro';vtrace('erro '+c+' '+ms());if(started){end();return;}fail(c,c==='interrupted'||c==='canceled');};
         if(opts.onb)u.onboundary=e=>{if(!e.name||e.name==='word')opts.onb(e.charIndex);};
-        clearTimeout(t);t=setTimeout(()=>fail('não começou',false),v&&!v.localService?6000:3500);
+        clearTimeout(t);t=setTimeout(()=>{vtrace('sem resposta '+ms());fail('não começou',false);},v&&!v.localService?6000:3500);
         if(speechSynthesis.paused)speechSynthesis.resume();
         speechSynthesis.speak(u);
       }catch(e){fail('exceção',false);}
     };
     let busy=false;try{busy=speechSynthesis.speaking||speechSynthesis.pending;if(busy)speechSynthesis.cancel();if(speechSynthesis.paused)speechSynthesis.resume();}catch(e){}
-    if(busy)setTimeout(go,150);else go();
+    const wait=Math.min(1200,Math.max(0,sndBusy-Date.now()));
+    const start=()=>{if(fin)return;if(id!==speakId){end();return;}
+      if(AC&&AC.state==='running'){clearTimeout(relaxT);let ok=false;const p=AC.suspend();const g=()=>{if(ok)return;ok=true;setTimeout(go,60);};
+        if(p&&p.then)p.then(g,g);setTimeout(g,350);}
+      else if(busy)setTimeout(go,150);else go();};
+    if(wait>0)setTimeout(start,wait);else start();
   });
 }
-function hush(){speakId++;setTalking(false);try{Voice.supported&&speechSynthesis.cancel();}catch(e){}}
+function hush(){speakId++;setTalking(false);audioAfterSpeech();try{Voice.supported&&speechSynthesis.cancel();}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.hidden){hush();if(window.Music)Music.stop();}});
 
 /* Efeitos sonoros */
 let AC=null;
+/* O som do app (músicas e efeitos) só fica ligado enquanto toca algo. Parado, ou enquanto o Lelo fala, ele é desligado,
+   para não "segurar" o som do celular: no iPhone e no Android isso deixava a voz do Lelo muda. */
+let relaxT=0,sndBusy=0;
+function wakeAudio(){if(AC&&AC.state!=='running'&&!talking&&!document.hidden){try{const p=AC.resume();if(p&&p.catch)p.catch(()=>{});}catch(e){}}}
+function relaxAudio(ms=1200){clearTimeout(relaxT);relaxT=setTimeout(()=>{if(AC&&AC.state==='running'&&!(window.Music&&Music.timer)&&Date.now()>sndBusy){try{AC.suspend();}catch(e){}}},ms);}
+function audioAfterSpeech(){if(window.Music&&Music.timer)wakeAudio();else relaxAudio();}
 function ensureAudio(){
-  try{if(navigator.audioSession&&navigator.audioSession.type!=='playback')navigator.audioSession.type='playback';}catch(e){}
   if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}
     if(AC){try{const b=AC.createBuffer(1,1,22050),src=AC.createBufferSource();src.buffer=b;src.connect(AC.destination);src.start(0);}catch(e){}}}
-  if(AC&&AC.state!=='running'){try{const p=AC.resume();if(p&&p.catch)p.catch(()=>{});}catch(e){}}}
-function tone(f1,f2,dur,type,when=0,vol=.16){if(!AC||!DB.settings.sfx)return;const t=AC.currentTime+when,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+dur+.05);}
+  wakeAudio();relaxAudio(1500);}
+function tone(f1,f2,dur,type,when=0,vol=.16){if(!AC||!DB.settings.sfx)return;wakeAudio();sndBusy=Math.max(sndBusy,Date.now()+(when+dur)*1000+80);relaxAudio((when+dur)*1000+900);const t=AC.currentTime+when,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+dur+.05);}
 function sfx(k){if(k==='ok'){tone(660,660,.13,'sine');tone(880,880,.13,'sine',.11);tone(1320,1320,.22,'sine',.22);}else if(k==='no'){tone(320,170,.28,'triangle',0,.2);}else if(k==='win'){[523,659,784,1047].forEach((f,i)=>tone(f,f,.22,'sine',i*.13));}else if(k==='tap'){tone(520,560,.07,'sine',0,.09);}else if(k==='vrum'){tone(70,140,.45,'sawtooth',0,.05);tone(140,90,.3,'sawtooth',.4,.04);}else if(k==='beep'){tone(760,760,.09,'square',0,.05);tone(760,760,.09,'square',.16,.05);}else if(k==='piui'){tone(880,1180,.32,'triangle',0,.1);tone(880,1180,.45,'triangle',.4,.1);}else if(k==='clap'){tone(2200,500,.07,'square',0,.07);}else if(k==='scrub'){tone(260,210,.06,'triangle',0,.035);}else if(k==='freeze'){tone(1400,500,.25,'sine',0,.12);tone(1800,900,.2,'sine',.05,.06);}}
 function burst(el){if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=el.getBoundingClientRect(),cols=['#FF8A3D','#FFC93C','#138A7E','#E5487A','#2F8FD8'];
   for(let i=0;i<16;i++){const s=document.createElement('span'),a=Math.random()*Math.PI*2,d=60+Math.random()*80;s.className='cf';s.style.cssText=`left:${b.left+b.width/2}px;top:${b.top+b.height/2}px;background:${cols[i%5]};--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px`;document.body.appendChild(s);setTimeout(()=>s.remove(),850);}}
@@ -1020,7 +1032,7 @@ var Music={cur:null,timer:null,step:0,next:0,g:null,duckOn:false,noise:null,
    this.cur=s;this.step=0;this.next=AC.currentTime+.06;const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(this.vol(),t);
    this.timer=setInterval(()=>this.tick(),25);this.tick();},
  stop(quick){if(this.timer){clearInterval(this.timer);this.timer=null;}this.cur=null;(this.vt||[]).forEach(clearTimeout);this.vt=[];this.cb=null;
-   if(this.g&&AC){const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(this.g.gain.value,t);this.g.gain.linearRampToValueAtTime(0,t+(quick?.03:.12));}},
+   if(this.g&&AC){const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setValueAtTime(this.g.gain.value,t);this.g.gain.linearRampToValueAtTime(0,t+(quick?.03:.12));}relaxAudio(600);},
  duck(on){this.duckOn=on;if(this.g&&AC&&this.cur){const t=AC.currentTime;this.g.gain.cancelScheduledValues(t);this.g.gain.setTargetAtTime(this.vol(),t,.08);}},
  tick(){const s=this.cur;if(!s||!AC)return;const sd=60/s.bpm/2;if(s.seq){while(this.cur===s&&this.next<AC.currentTime+.15){this.seqStep(s,this.step,this.next,sd);this.next+=sd;this.step++;}return;}while(this.next<AC.currentTime+.15){this.note(s,this.step,this.next,sd);this.next+=sd;this.step++;}},
  note(s,k,t,sd){const bar=Math.floor(k/8)%s.lead.length,p=k%8,toks=s.lead[bar].split(' '),tk=toks[p];
@@ -1080,7 +1092,7 @@ Object.assign(Music,{vt:[],cb:null,
    this.timer=setInterval(()=>this.tick(),25);this.tick();return true;},
  at(t,fn){this.vt.push(setTimeout(fn,Math.max(0,(t-AC.currentTime)*1000)));},
  seqStep(s,k,t,sd){
-   if(k>=s.total){clearInterval(this.timer);this.timer=null;this.cur=null;this.at(t,()=>{if(this.cb){const cb=this.cb;this.cb=null;cb('end');}});return;}
+   if(k>=s.total){clearInterval(this.timer);this.timer=null;this.cur=null;relaxAudio((t-AC.currentTime)*1000+1500);this.at(t,()=>{if(this.cb){const cb=this.cb;this.cb=null;cb('end');}});return;}
    while(s.li<s.lines.length&&s.lines[s.li].t0===k){const L=s.lines[s.li++];this.at(t,()=>this.cb&&this.cb('line',L));}
    while(s.ei<s.ev.length&&s.ev[s.ei].t===k){const e=s.ev[s.ei++];this.voice(e.f,t,e.dur*sd);if(e.si>=0)this.at(t,()=>this.cb&&this.cb('syl',e));}
    const p=k%4,ch=s.chords[k>>2],G=s.groove,intro=k<8,root=nfreq(ch.replace('m','')+'2');
@@ -2136,14 +2148,14 @@ const A={
  doReset(el){const p=DB.profiles.find(x=>x.id===el.dataset.id);if(p){p.done={};p.log=[];p.err={};p.time={};p.example=false;p.resetAt=Date.now();}S.confirmReset=null;save();render();},
  firstKid(){S.back='profiles';S.afterGate='add';newGate();go('gate');},
  testVoice(){const st=$('#snd-status');if(!st)return;st.innerHTML='Testando o som… aumente o volume do aparelho.';ensureAudio();
-   let spoke=null;Voice.errs.length=0;
-   try{if(AC){const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.frequency.value=660;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.35);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.4);}}catch(e){}
+   let spoke=null,musicOk=false;Voice.errs.length=0;Voice.trace.length=0;setTimeout(()=>{musicOk=!!AC&&AC.state==='running';},300);
+   try{if(AC){wakeAudio();sndBusy=Date.now()+450;relaxAudio(1400);const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.frequency.value=660;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.35);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.4);}}catch(e){}
    const p=say('Oi! Eu sou o Lelo. Vamos aprender as letras brincando? A, de abelha. Bê, de bola.',{onstart:v=>{spoke=v?v.name:'voz padrão';}});
-   const show=()=>{const e=$('#snd-status');if(!e)return;const music=!!AC&&AC.state==='running';
+   const show=()=>{const e=$('#snd-status');if(!e)return;const music=musicOk;
      e.innerHTML=[spoke?'✅ Voz do Lelo: funcionou ('+esc(spoke)+')':'❌ Voz do Lelo: o aparelho não começou a falar.',
        music?'✅ Músicas e efeitos: funcionando':'❌ Músicas e efeitos: o aparelho bloqueou o som'+(AC?' ('+esc(AC.state)+')':''),
        'Vozes em português encontradas: '+Voice.list.length+(Voice.v?' (usando '+esc(Voice.v.name)+', '+esc(Voice.v.lang)+')':''),
-       !spoke&&Voice.errs.length?'Detalhe para o suporte: '+esc(Voice.errs.join(', ')):'',
+       !spoke?'Detalhe para o suporte: '+esc(Voice.trace.join(' ')||'nenhuma resposta da fala')+' | total de vozes: '+(Voice.supported?speechSynthesis.getVoices().length:'sem fala')+' | Chrome '+esc((/Chrome\/(\d+)/.exec(navigator.userAgent)||[])[1]||'?'):'',
        IN_APP?'⚠️ Aberto dentro de outro aplicativo: abra o link no Chrome.':''].filter(Boolean).join('<br>');};
    Promise.race([p,new Promise(r=>setTimeout(r,12000))]).then(()=>setTimeout(show,300));}
 };
@@ -2173,7 +2185,7 @@ app.addEventListener('change',e=>{const el=e.target.closest('[data-change]');if(
 let speechPrimed=false;
 document.addEventListener('pointerdown',()=>{unlocked=true;ensureAudio();
   if(!speechPrimed&&Voice.supported){speechPrimed=true;if(!Voice.ok)pickVoice();if(!IS_IOS)return;try{if(!speechSynthesis.speaking&&!speechSynthesis.pending){const u=new SpeechSynthesisUtterance(' ');u.volume=0;u.lang='pt-BR';speechSynthesis.speak(u);}}catch(e){}}},{capture:true});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){ensureAudio();try{if(Voice.supported&&speechSynthesis.paused)speechSynthesis.resume();}catch(e){}}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){try{if(Voice.supported&&speechSynthesis.paused)speechSynthesis.resume();}catch(e){}}});
 document.addEventListener('keydown',()=>{unlocked=true;},{capture:true});
 /* Sair do jogo só segurando o botão da casinha */
 let holdT=null;

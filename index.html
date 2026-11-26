@@ -923,7 +923,7 @@ const DB=load()||{settings:{rate:0.9,voice:'',sfx:true},profiles:[]};
 DB.profiles.forEach(p=>{p.done=p.done||{};p.log=p.log||[];p.err=p.err||{};p.time=p.time||{};});
 
 /* ================= Voz (narração em tudo) ================= */
-const Voice={list:[],v:null,ok:false,checked:false,supported:'speechSynthesis' in window};
+const Voice={list:[],v:null,ok:false,checked:false,supported:'speechSynthesis' in window,errs:[],spoke:''};
 function pickVoice(){
   if(!Voice.supported)return;
   const all=speechSynthesis.getVoices()||[];
@@ -937,6 +937,7 @@ if(Voice.supported){pickVoice();speechSynthesis.onvoiceschanged=()=>{const was=V
   setTimeout(()=>{Voice.checked=true;pickVoice();if(!Voice.ok&&S.screen==='home')render();},1500);
   let vtry=0;const vpoll=setInterval(()=>{const was=Voice.ok;pickVoice();if(Voice.ok&&!was&&['home','parents'].includes(S.screen))render();if(Voice.ok||++vtry>12)clearInterval(vpoll);},700);}
 /* aberto dentro de outro aplicativo (app do Claude, Instagram, WhatsApp...): no Android esses navegadores internos não falam */
+const IS_IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
 const IN_APP=/; wv\)|FBAN|FBAV|Instagram|Line\/|WhatsApp/i.test(navigator.userAgent);
 let talking=false,speakId=0;
 function setTalking(on){talking=on;if(window.Music)Music.duck(on);$$('.lelo').forEach(l=>l.classList.toggle('talk',on));}
@@ -947,31 +948,36 @@ function say(text,opts={}){
     if(!text){res();return;}
     setTalking(true);
     if(!Voice.supported){setTimeout(done,Math.min(2600,text.length*55));return;}
-    let fin=false,t=0,tries=0;
+    let fin=false,t=0,ci=0,again=0;
     const end=()=>{if(fin)return;fin=true;clearTimeout(t);done();};
-    /* vozes para tentar: a escolhida e, se ela não falar, outra voz em português instalada no aparelho */
-    const alt=Voice.list.filter(v=>v!==Voice.v).sort((a,b)=>(b.localService?1:0)-(a.localService?1:0));
-    const cands=[Voice.v,alt.find(v=>/pt[-_]BR/i.test(v.lang))||alt[0]||null];
+    /* tentativas: a voz escolhida, outra voz em português do aparelho e, por último, a voz padrão (sem escolher voz).
+       No Android a fala às vezes é cortada logo no começo (o "cancelar" da fala anterior chega atrasado): aí tenta de novo. */
+    const alt=Voice.list.filter(v=>v!==Voice.v).sort((x,y)=>(y.localService?1:0)-(x.localService?1:0));
+    const cands=[Voice.v,alt.find(v=>/pt[-_]BR/i.test(v.lang))||alt[0]].filter(Boolean);cands.push(null);
     const go=()=>{
       if(fin)return;if(id!==speakId){end();return;}
-      const v=cands[tries++]||null;let started=false;
+      const v=cands[ci];let started=false,dead=false;const t0=Date.now();
+      const fail=(why,sameVoice)=>{if(fin||started||dead)return;dead=true;clearTimeout(t);Voice.errs.push(why);if(Voice.errs.length>6)Voice.errs.shift();
+        if(id!==speakId){end();return;}
+        if(sameVoice&&again<2)again++;else ci++;
+        if(ci>=cands.length){end();return;}
+        let stuck=false;try{stuck=speechSynthesis.speaking||speechSynthesis.pending;if(stuck)speechSynthesis.cancel();}catch(e){}
+        setTimeout(go,stuck?450:300);};
       try{
         const u=new SpeechSynthesisUtterance(text);
         u.lang=v?v.lang.replace('_','-'):'pt-BR';if(v)u.voice=v;
-        u.rate=DB.settings.rate;u.pitch=1.08;u.volume=1;
-        const retry=()=>{if(fin||started)return;clearTimeout(t);
-          if(tries<cands.length&&id===speakId){try{speechSynthesis.cancel();}catch(e){}setTimeout(go,90);}else end();};
-        u.onstart=()=>{started=true;if(opts.onstart)opts.onstart(v);clearTimeout(t);t=setTimeout(end,2500+text.length*120/DB.settings.rate);};
-        u.onend=end;
-        u.onerror=e=>{if(!started&&e&&e.error!=='interrupted'&&e.error!=='canceled')retry();else end();};
+        u.rate=v?DB.settings.rate:Math.max(.85,DB.settings.rate);u.pitch=v?1.08:1;u.volume=1;
+        u.onstart=()=>{if(dead)return;started=true;Voice.spoke=v?v.name:'voz padrão';if(opts.onstart)opts.onstart(v);clearTimeout(t);t=setTimeout(end,2500+text.length*120/DB.settings.rate);};
+        u.onend=()=>{if(dead)return;if(!started&&Date.now()-t0<700)fail('terminou sem falar',false);else end();};
+        u.onerror=e=>{if(dead)return;const c=(e&&e.error)||'erro';if(started){end();return;}fail(c,c==='interrupted'||c==='canceled');};
         if(opts.onb)u.onboundary=e=>{if(!e.name||e.name==='word')opts.onb(e.charIndex);};
-        clearTimeout(t);t=setTimeout(retry,v&&!v.localService?6000:3500);
+        clearTimeout(t);t=setTimeout(()=>fail('não começou',false),v&&!v.localService?6000:3500);
         if(speechSynthesis.paused)speechSynthesis.resume();
         speechSynthesis.speak(u);
-      }catch(e){end();}
+      }catch(e){fail('exceção',false);}
     };
     let busy=false;try{busy=speechSynthesis.speaking||speechSynthesis.pending;if(busy)speechSynthesis.cancel();if(speechSynthesis.paused)speechSynthesis.resume();}catch(e){}
-    if(busy)setTimeout(go,70);else go();
+    if(busy)setTimeout(go,150);else go();
   });
 }
 function hush(){speakId++;setTalking(false);try{Voice.supported&&speechSynthesis.cancel();}catch(e){}}
@@ -2130,16 +2136,16 @@ const A={
  doReset(el){const p=DB.profiles.find(x=>x.id===el.dataset.id);if(p){p.done={};p.log=[];p.err={};p.time={};p.example=false;p.resetAt=Date.now();}S.confirmReset=null;save();render();},
  firstKid(){S.back='profiles';S.afterGate='add';newGate();go('gate');},
  testVoice(){const st=$('#snd-status');if(!st)return;st.innerHTML='Testando o som… aumente o volume do aparelho.';ensureAudio();
-   let spoke=null,music=false;
+   let spoke=null;Voice.errs.length=0;
    try{if(AC){const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;o.frequency.value=660;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.35);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+.4);}}catch(e){}
-   setTimeout(()=>{music=!!AC&&AC.state==='running';},500);
    const p=say('Oi! Eu sou o Lelo. Vamos aprender as letras brincando? A, de abelha. Bê, de bola.',{onstart:v=>{spoke=v?v.name:'voz padrão';}});
-   const show=()=>{const e=$('#snd-status');if(!e)return;
+   const show=()=>{const e=$('#snd-status');if(!e)return;const music=!!AC&&AC.state==='running';
      e.innerHTML=[spoke?'✅ Voz do Lelo: funcionou ('+esc(spoke)+')':'❌ Voz do Lelo: o aparelho não começou a falar.',
        music?'✅ Músicas e efeitos: funcionando':'❌ Músicas e efeitos: o aparelho bloqueou o som'+(AC?' ('+esc(AC.state)+')':''),
-       'Vozes em português encontradas: '+Voice.list.length,
+       'Vozes em português encontradas: '+Voice.list.length+(Voice.v?' (usando '+esc(Voice.v.name)+', '+esc(Voice.v.lang)+')':''),
+       !spoke&&Voice.errs.length?'Detalhe para o suporte: '+esc(Voice.errs.join(', ')):'',
        IN_APP?'⚠️ Aberto dentro de outro aplicativo: abra o link no Chrome.':''].filter(Boolean).join('<br>');};
-   Promise.race([p,new Promise(r=>setTimeout(r,9000))]).then(show);}
+   Promise.race([p,new Promise(r=>setTimeout(r,12000))]).then(()=>setTimeout(show,300));}
 };
 const FORMS={
  gate(f){const v=parseInt($('#gate-ans').value,10);
@@ -2166,7 +2172,7 @@ app.addEventListener('submit',e=>{e.preventDefault();const f=e.target.closest('f
 app.addEventListener('change',e=>{const el=e.target.closest('[data-change]');if(el&&CHANGES[el.dataset.change])CHANGES[el.dataset.change](el);});
 let speechPrimed=false;
 document.addEventListener('pointerdown',()=>{unlocked=true;ensureAudio();
-  if(!speechPrimed&&Voice.supported){speechPrimed=true;if(!Voice.ok)pickVoice();try{if(!speechSynthesis.speaking&&!speechSynthesis.pending){const u=new SpeechSynthesisUtterance(' ');u.volume=0;u.lang='pt-BR';speechSynthesis.speak(u);}}catch(e){}}},{capture:true});
+  if(!speechPrimed&&Voice.supported){speechPrimed=true;if(!Voice.ok)pickVoice();if(!IS_IOS)return;try{if(!speechSynthesis.speaking&&!speechSynthesis.pending){const u=new SpeechSynthesisUtterance(' ');u.volume=0;u.lang='pt-BR';speechSynthesis.speak(u);}}catch(e){}}},{capture:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){ensureAudio();try{if(Voice.supported&&speechSynthesis.paused)speechSynthesis.resume();}catch(e){}}});
 document.addEventListener('keydown',()=>{unlocked=true;},{capture:true});
 /* Sair do jogo só segurando o botão da casinha */
